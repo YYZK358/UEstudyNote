@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style>
+  @font-face {
+  font-family: octicons-link;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #24292e;
+  line-height: 1.5;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b31d28;
+  color: #fafbfc;
+}
+
+.markdown-body .pl-c2 {
+  background-color: #d73a49;
+  color: #fafbfc;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #22863a;
+  font-weight: 700;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #005cc5;
+  font-weight: 700;
+}
+
+.markdown-body .pl-mi {
+  color: #24292e;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #24292e;
+  font-weight: 700;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffeef0;
+  color: #b31d28;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #f0fff4;
+  color: #22863a;
+}
+
+.markdown-body .pl-mc {
+  background-color: #ffebda;
+  color: #e36209;
+}
+
+.markdown-body .pl-mi2 {
+  background-color: #005cc5;
+  color: #f6f8fa;
+}
+
+.markdown-body .pl-mdr {
+  color: #6f42c1;
+  font-weight: 700;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  color: #032f62;
+  text-decoration: underline;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.markdown-body hr:before {
+  content: "";
+  display: table;
+}
+
+.markdown-body hr:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-bottom: 0!important;
+  padding-top: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-bottom: 8px!important;
+  padding-top: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body:before {
+  content: "";
+  display: table;
+}
+
+.markdown-body:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.markdown-body hr {
+  background-color: #e1e4e8;
+  border: 0;
+  height: .25em;
+  margin: 24px 0;
+  padding: 0;
+}
+
+.markdown-body blockquote {
+  border-left: .25em solid #dfe2e5;
+  color: #6a737d;
+  padding: 0 1em;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #fafbfc;
+  border: 1px solid #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+  color: #444d56;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: .3em;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  color: #6a737d;
+  font-size: .85em;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 0;
+}
+
+.markdown-body dl dd {
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+.markdown-body table {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  background-color: #fff;
+  box-sizing: content-box;
+  max-width: 100%;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: .2em .4em;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  background: transparent;
+  border: 0;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  word-break: normal;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  max-width: auto;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+}
+
+.markdown-body .commit-tease-sha {
+  color: #444d56;
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 90%;
+}
+
+.markdown-body .blob-wrapper {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  color: rgba(27,31,35,.3);
+  cursor: pointer;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+  user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  line-height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  color: #24292e;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  overflow: visible;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  background: #ffea7f;
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+  color: #444d56;
+  display: inline-block;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+.markdown-body :checked+.radio-label {
+  border-color: #0366d6;
+  position: relative;
+  z-index: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+/*# sourceURL=webpack://./node_modules/github-markdown-css/github-markdown.css */
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL25vZGVfbW9kdWxlcy9naXRodWItbWFya2Rvd24tY3NzL2dpdGh1Yi1tYXJrZG93bi5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSwwQkFBMEI7RUFDMUIsMkRBQXF0RTtBQUN2dEU7O0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsa0JBQWtCO0VBQ2xCLDJCQUEyQjtBQUM3Qjs7QUFFQTtFQUNFLFdBQVc7RUFDWCxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLGtCQUFrQjtBQUNwQjs7QUFFQTtFQUNFLGFBQWE7QUFDZjs7QUFFQTs7Ozs7O0VBTUUsY0FBYztFQUNkLHNCQUFzQjtFQUN0QixrQkFBa0I7QUFDcEI7O0FBRUE7Ozs7OztFQU1FLHFCQUFxQjtBQUN2Qjs7QUFFQTs7Ozs7O0VBTUUsbUJBQW1CO0FBQ3JCOztBQUVBO0VBQ0UsMEJBQTBCO0VBQzFCLDhCQUE4QjtFQUM5QixjQUFjO0VBQ2QsZ0JBQWdCO0VBQ2hCLGtJQUFrSTtFQUNsSSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLHFCQUFxQjtBQUN2Qjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7O0VBRUUsY0FBYztBQUNoQjs7QUFFQTs7RUFFRSxjQUFjO0FBQ2hCOztBQUVBOztFQUVFLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsY0FBYztBQUNoQjs7QUFFQTs7Ozs7OztFQU9FLGNBQWM7QUFDaEI7O0FBRUE7O0VBRUUsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSx5QkFBeUI7RUFDekIsY0FBYztBQUNoQjs7QUFFQTtFQUNFLHlCQUF5QjtFQUN6QixjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsYUFBYTtBQUNmOztBQUVBO0VBQ0UsY0FBYztFQUNkLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7OztFQUdFLGNBQWM7RUFDZCxnQkFBZ0I7QUFDbEI7O0FBRUE7RUFD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 */
+  </style>
+  <style>
+  /**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	/* This background color was intended by the author of this theme. */
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function,
+.token.class-name {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+/*# sourceURL=webpack://./node_modules/prismjs/themes/prism.css */
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL25vZGVfbW9kdWxlcy9wcmlzbWpzL3RoZW1lcy9wcmlzbS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7RUFJRTs7QUFFRjs7Q0FFQyxZQUFZO0NBQ1osZ0JBQWdCO0NBQ2hCLHdCQUF3QjtDQUN4QixzRUFBc0U7Q0FDdEUsY0FBYztDQUNkLGdCQUFnQjtDQUNoQixnQkFBZ0I7Q0FDaEIsb0JBQW9CO0NBQ3BCLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsZ0JBQWdCOztDQUVoQixnQkFBZ0I7Q0FDaEIsY0FBYztDQUNkLFdBQVc7O0NBRVgscUJBQXFCO0NBQ3JCLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsYUFBYTtBQUNkOztBQUVBOztDQUVDLGlCQUFpQjtDQUNqQixtQkFBbUI7QUFDcEI7O0FBRUE7O0NBRUMsaUJBQWlCO0NBQ2pCLG1CQUFtQjtBQUNwQjs7QUFFQTtDQUNDOztFQUVDLGlCQUFpQjtDQUNsQjtBQUNEOztBQUVBLGdCQUFnQjtBQUNoQjtDQUNDLFlBQVk7Q0FDWixjQUFjO0NBQ2QsY0FBYztBQUNmOztBQUVBOztDQUVDLG1CQUFtQjtBQUNwQjs7QUFFQSxnQkFBZ0I7QUFDaEI7Q0FDQyxhQUFhO0NBQ2IsbUJBQW1CO0NBQ25CLG1CQUFtQjtBQUNwQjs7QUFFQTs7OztDQUlDLGdCQUFnQjtBQUNqQjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTs7Ozs7OztDQU9DLFdBQVc7QUFDWjs7QUFFQTs7Ozs7O0NBTUMsV0FBVztBQUNaOztBQUVBOzs7OztDQUtDLGNBQWM7Q0FDZCxvRUFBb0U7Q0FDcEUsaUNBQWlDO0FBQ2xDOztBQUVBOzs7Q0FHQyxXQUFXO0FBQ1o7O0FBRUE7O0NBRUMsY0FBYztBQUNmOztBQUVBOzs7Q0FHQyxXQUFXO0FBQ1o7O0FBRUE7O0NBRUMsaUJBQWlCO0FBQ2xCO0FBQ0E7Q0FDQyxrQkFBa0I7QUFDbkI7O0FBRUE7Q0FDQyxZQUFZO0FBQ2IiLCJzb3VyY2VSb290IjoiIn0= */
+  </style>
+  <style>
+  
+  </style>
+  <style>
+    .markdown-body {
+      font-family: -apple-system,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+    }
+
+    @media not print {
+      .markdown-body {
+        padding: 45px;
+      }
+
+      @media (max-width: 767px) {
+        .markdown-body {
+          padding: 15px;
+        }
+      }
+    }
+
+    .hf-container {
+      color: #24292e;
+      line-height: 1.3;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+      white-space: pre-wrap;
+    }
+    .markdown-body table {
+      display: table;
+    }
+    .markdown-body img[data-align="center"] {
+      display: block;
+      margin: 0 auto;
+    }
+    .markdown-body img[data-align="right"] {
+      display: block;
+      margin: 0 0 0 auto;
+    }
+    .markdown-body li.task-list-item {
+      list-style-type: none;
+    }
+    .markdown-body li > [type=checkbox] {
+      margin: 0 0 0 -1.3em;
+    }
+    .markdown-body input[type="checkbox"] ~ p {
+      margin-top: 0;
+      display: inline-block;
+    }
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+      list-style-type: decimal;
+    }
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+      list-style-type: decimal;
+    }
+  </style>
+  <style>.markdown-body a.footnote-ref {
+  text-decoration: none;
+}
+
+.footnotes {
+  font-size: .85em;
+  opacity: .8;
+}
+
+.footnotes li[role="doc-endnote"] {
+  position: relative;
+}
+
+.footnotes .footnote-back {
+  position: absolute;
+  font-family: initial;
+  top: .2em;
+  right: 1em;
+  text-decoration: none;
+}
+
+.inline-math.invalid,
+.multiple-math.invalid {
+  color: rgb(255, 105, 105);
+}
+
+.toc-container {
+  width: 100%;
+}
+
+.toc-container .toc-title {
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+.toc-container li,
+.toc-container ul,
+.toc-container ul li {
+  list-style: none !important;
+}
+
+.toc-container > ul {
+  padding-left: 0;
+}
+
+.toc-container ul li span {
+  display : flex;
+}
+
+.toc-container ul li span a {
+  color: inherit;
+  text-decoration: none;
+}
+.toc-container ul li span a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc-container ul li span span.dots {
+  flex: 1;
+  height: 0.65em;
+  margin: 0 10px;
+  border-bottom: 2px dotted black;
+}
+
+/*# sourceURL=webpack://./src/muya/lib/assets/styles/exportStyle.css */
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9tdXlhL2xpYi9hc3NldHMvc3R5bGVzL2V4cG9ydFN0eWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHFCQUFxQjtBQUN2Qjs7QUFFQTtFQUNFLGdCQUFnQjtFQUNoQixXQUFXO0FBQ2I7O0FBRUE7RUFDRSxrQkFBa0I7QUFDcEI7O0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsb0JBQW9CO0VBQ3BCLFNBQVM7RUFDVCxVQUFVO0VBQ1YscUJBQXFCO0FBQ3ZCOztBQUVBOztFQUVFLHlCQUF5QjtBQUMzQjs7QUFFQTtFQUNFLFdBQVc7QUFDYjs7QUFFQTtFQUNFLGdCQUFnQjtFQUNoQixnQkFBZ0I7RUFDaEIsZ0JBQWdCO0FBQ2xCOztBQUVBOzs7RUFHRSwyQkFBMkI7QUFDN0I7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGNBQWM7RUFDZCxxQkFBcUI7QUFDdkI7QUFDQTtFQUNFLGNBQWM7RUFDZCxxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRSxPQUFPO0VBQ1AsY0FBYztFQUNkLGNBQWM7RUFDZCwrQkFBK0I7QUFDakMiLCJzb3VyY2VSb290IjoiIn0= */</style>
+  <style>.markdown-body{}pre.front-matter{display:none!important;}</style>
+</head>
+<body>
+  <article class="markdown-body"><h1 class="atx" id="ue打包上传andampandamp克隆github">UE打包上传&amp;&amp;克隆github</h1>
+<p>文件过大问题</p>
+<p>一般删除 .vs    Intermediate两个文件即可</p>
+<p>以下是UE项目中一些可以删除的文件及文件夹：</p>
+<ul>
+<li>.vs文件夹及相关文件：包含虚幻IDE相关配置和临时文件、历史记录等，由VS生成。若要更换编译器则必须删除，删除后可重新生成.</li>
+<li>Binaries文件夹：存放编译生成的二进制文件，针对不同平台和配置进行发布、运行等。若不需要使用已编译好的二进制文件，可将其删除，再次编译项目时会重新生成.</li>
+<li>DerivedDataCache文件夹：包含着色器预制编译等派生数据文件。若不打算重新编译或构建项目，可删除此文件夹以释放空间，不过下次打开项目时会重新生成相关数据，导致项目打开速度变慢.</li>
+<li>Intermediate文件夹：包含中间文件、临时文件、缓存文件等，如UnrealBuildTool生成的文件、Visual Studio项目文件等，可删除，但再次打开项目或重新编译时会重新生成.</li>
+<li>Saved文件夹：包含引擎生成的文件，如配置文件和日志等，可删除，不过若项目出现问题，这些文件中的日志信息可能有助于排查，确定项目无问题时可删除.</li>
+<li>.vsconfig文件：由VS生成，包含VS的SDK版本等信息，可删除，需要时可重新生成.</li>
+<li>.sln文件：使用此文件可通过VS打开C++代码，可由.uproject文件生成，若不需要通过此文件打开项目，可删除.</li>
+</ul>
+<h2 class="atx" id="从github克隆ue项目">从github克隆UE项目</h2>
+<p>1.克隆下UE项目</p>
+<p>2.重构项目
+从文件夹中双击打开自动重构
+<img alt="alt text" src="image.png"></p>
+<p>3.进入项目后
+工具--&gt;重新生成C++代码--&gt;打开C++代码--&gt;关闭虚幻编辑器--&gt;在C++代码中重新生成项目</p>
+<h1 class="atx" id="ue指针（tobject）">UE指针（TObject）</h1>
+<pre><code class="fenced-code-block">         AMyPlayer*  PlayerCharacter
+
+         TObjectPtr&lt;AMyPlayer&gt; PlayerCharacter;
+        //建议使用</code></pre>
+<h1 class="atx" id="uproperty标签">UPROPERTY标签</h1>
+<pre><code class="indented-code-block">UPROPERTY(BlueprintReadOnly)
+ //蓝图只读
+
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//所以地方可编辑，蓝图可读写
+
+UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+//所有地方可见，蓝图可读写
+
+UFUNCTION(BlueprintCallable)
+//对函数进行修饰，让其可以被蓝图调用</code></pre>
+<h1 class="atx" id="配置输入映射">配置输入映射</h1>
+<pre><code class="fenced-code-block">    1     void AMainPlayer::BeginPlay()
+    2     {
+    3         Super::BeginPlay();
+    4 
+    5         //添加输入映射内容
+    6         if (APlayerController* PlayerController = Cast&lt;APlayerController&gt;(Controller))
+    7         {
+    8             //获取本地玩家子系统
+    9             if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+   10                 ULocalPlayer::GetSubsystem&lt;UEnhancedInputLocalPlayerSubsystem&gt;(PlayerController-&gt;GetLocalPlayer()))
+   11             {
+   12                 //添加映射上下文
+   13                 Subsystem-&gt;AddMappingContext(InputMapping, 0);
+   14             }
+   15         }</code></pre>
+<h1 class="atx" id="动画">动画</h1>
+<h2 class="atx" id="ue蒙太奇在c中使用">UE蒙太奇在C++中使用</h2>
+<p>在 头文件中 声明</p>
+<pre><code class="fenced-code-block language-//创建动画蒙太奇函数">    void AnimMontagePlay(UAnimMontage* MontageToPlay, FName SectionName = "Default", float PlayRate = 1.0f);
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Montage", meta=(AllowPrivateAccess="true"))
+    UAnimMontage* AttackMontage;</code></pre>
+<p>在.cpp中实现</p>
+<pre><code class="fenced-code-block language-void">       {
+               UAnimInstance* AnimInstance = Cast&lt;UAnimInstance&gt;(GetMesh()-&gt;GetAnimInstance());
+                if (AnimInstance &amp;&amp; MontageToPlay)
+               {
+                        //检查动画蒙太奇是否在播放
+                       if (!AnimInstance-&gt;Montage_IsPlaying(MontageToPlay))
+                        {
+                                PlayAnimMontage(MontageToPlay, PlayRate, SectionName);
+                       }
+               }
+       }</code></pre>
+<p>调用</p>
+<pre><code class="fenced-code-block">        Input-&gt;BindAction(RollAction, ETriggerEvent::Triggered, this, &amp;AMainPlayer::Roll);
+
+        void AMainPlayer::Roll(){
+                AnimMontagePlay(AttackMontage, FName("Attack5"));
+
+        }</code></pre>
+<h2 class="atx" id="动画通知">动画通知</h2>
+<h3 class="atx" id="动画状态通知">动画状态通知</h3>
+<p><strong>有开始和结束</strong>
+<img alt="alt text" src="image-1.png"></p>
+<h3 class="atx" id="动画通知-1">动画通知</h3>
+<p><strong>只有开始没有结束</strong></p>
+<h2 class="atx" id="动画蓝图的使用（结合混合空间）">动画蓝图的使用（结合混合空间）</h2>
+<p><img alt="alt text" src="image-2.png">
+<img alt="alt text" src="image-3.png"></p>
+<h1 class="atx" id="玩家类中的设置aplayercharacter">玩家类中的设置(APlayerCharacter)</h1>
+<h2 class="atx" id="（重要）获取玩家控制器">（重要）获取玩家控制器</h2>
+<pre><code class="fenced-code-block">APlayerController* PlayerController = Cast&lt;APlayerController&gt;(GetController());
+if (PlayerController)
+{
+    // 启用鼠标光标和点击事件
+    PlayerController-&gt;bShowMouseCursor = true;
+    PlayerController-&gt;bEnableClickEvents = true;
+    PlayerController-&gt;bEnableMouseOverEvents = true;
+}</code></pre>
+<h2 class="atx" id="玩家速度设置">玩家速度设置</h2>
+<pre><code class="fenced-code-block">#include "GameFramework/CharacterMovementComponent.h"</code></pre>
+<pre><code class="fenced-code-block">GetCharacterMovement()-&gt;MaxWalkSpeed = PlayerMoveSpeed;</code></pre>
+<h2 class="atx" id="按键映射建立">按键映射建立</h2>
+<p>1.增强输入头文件</p>
+<pre><code class="fenced-code-block">         #include "EnhancedInputSubsystems.h"
+         #include "EnhancedInputComponent.h"</code></pre>
+<p>2.声明映射</p>
+<pre><code class="fenced-code-block">         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+         TObjectPtr&lt;UInputMappingContext&gt; DefaultMapping;</code></pre>
+<p>3.声明输入组件</p>
+<pre><code class="fenced-code-block">         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+         TObjectPtr&lt;UInputAction&gt; MoveAction;
+
+         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+         TObjectPtr&lt;UInputAction&gt; LookAction;
+
+         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+         TObjectPtr&lt;UInputAction&gt; JumpAction;</code></pre>
+<p>4.配置映射（开始时配置）</p>
+<pre><code class="fenced-code-block">         void AMyPlayer::BeginPlay()
+         {
+                 Super::BeginPlay();
+                 if (const ULocalPlayer* Player = GEngine &amp;&amp; GetWorld() ? GEngine-&gt;GetFirstGamePlayer(GetWorld()):nullptr)
+                 {
+                         UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem&lt;UEnhancedInputLocalPlayerSubsystem&gt;(Player);
+                         if (DefaultMapping) {
+                             Subsystem-&gt;AddMappingContext(DefaultMapping, 0);
+                         }
+                }
+        }</code></pre>
+<p>5.绑定函数</p>
+<pre><code class="fenced-code-block">         void AMyPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+         {
+                 Super::SetupPlayerInputComponent(PlayerInputComponent);
+                 if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked&lt; UEnhancedInputComponent&gt;(PlayerInputComponent)) {
+                         EnhancedInputComponent-&gt;BindAction(LookAction, ETriggerEvent::Triggered, this, &amp;AMyPlayer::Look);
+                         EnhancedInputComponent-&gt;BindAction(MoveAction, ETriggerEvent::Triggered, this, &amp;AMyPlayer::Move);
+                         EnhancedInputComponent-&gt;BindAction(JumpAction, ETriggerEvent::Triggered, this, &amp;AMyPlayer::Jump);
+                         EnhancedInputComponent-&gt;BindAction(SpringArmAction, ETriggerEvent::Triggered, this, &amp;AMyPlayer::SetSpringArm);
+                 }
+        }</code></pre>
+<h2 class="atx" id="设置玩家的一些基本组件">设置玩家的一些基本组件</h2>
+<p>1.声明弹簧臂组件和相机组件</p>
+<pre><code class="fenced-code-block">         #include "Camera/CameraComponent.h"    // 包含 UCameraComponent
+         #include "GameFramework/SpringArmComponent.h"  // 包含 USpringArmComponent
+
+         UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+         USpringArmComponent* SpringArm;
+
+         UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+         UCameraComponent* Camera;</code></pre>
+<p>2.在构造函数里设置</p>
+<pre><code class="fenced-code-block">         SpringArm = CreateDefaultSubobject&lt;USpringArmComponent&gt;(TEXT("SpringArm"));
+         SpringArm-&gt;SetupAttachment(RootComponent);
+         Camera = CreateDefaultSubobject&lt;UCameraComponent&gt;(TEXT("Camera"));
+         Camera-&gt;SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+
+         //不要让玩家随着控制器旋转
+         bUseControllerRotationPitch = false;
+         bUseControllerRotationRoll = false;
+         bUseControllerRotationYaw = false;
+         //相机杆旋转 相机不旋转
+         SpringArm-&gt;bUsePawnControlRotation = true;
+         Camera-&gt;bUsePawnControlRotation = false;
+
+         //角色根据运动方向旋转
+        GetCharacterMovement()-&gt;bOrientRotationToMovement = true;
+        GetCharacterMovement()-&gt;RotationRate = FRotator(0.f, 400.f, 0.f);</code></pre>
+<h2 class="atx" id="角色运动逻辑（函数）">角色运动逻辑（函数）</h2>
+<p>1.声明运动函数（参数固定格式）</p>
+<pre><code class="fenced-code-block">         void Move(const FInputActionValue&amp; Value);</code></pre>
+<p>2.逻辑实现</p>
+<pre><code class="fenced-code-block">         void AMyPlayer::Move(const FInputActionValue&amp; Value)
+         {
+                 FVector2D MoveVector = Value.Get&lt;FVector2D&gt;();
+                 if (Controller) {
+                         const FRotator Rotation = Controller-&gt;GetControlRotation();
+                         const FRotator YawRotator(0, Rotation.Yaw, 0);
+                         const FVector ForwardDirection = FRotationMatrix(YawRotator).GetUnitAxis(EAxis::X);
+                         const FVector RightDirection = FRotationMatrix(YawRotator).GetUnitAxis(EAxis::Y);
+                         AddMovementInput(ForwardDirection, MoveVector.X);
+                        AddMovementInput(RightDirection, MoveVector.Y);
+                }
+
+        }</code></pre>
+<h2 class="atx" id="角色跳跃">角色跳跃</h2>
+<p>1.在.h中声明</p>
+<pre><code class="fenced-code-block">         //重写父类的Jump虚函数
+         virtual void Jump() override;</code></pre>
+<p>2.在.cpp中定义</p>
+<pre><code class="fenced-code-block">        //跳函数
+        void AMyCharacter::Jump()
+        {
+                Super::Jump();
+        }</code></pre>
+<pre><code class="fenced-code-block">         #include "GameFramework/CharacterMovementComponent.h" // 必须包含</code></pre>
+<pre><code class="fenced-code-block">         // 在角色构造函数中设置
+         AMyCharacter::AMyCharacter()
+         {
+             // 确保 CharacterMovement 存在
+             if (GetCharacterMovement())
+             {
+                 GetCharacterMovement()-&gt;JumpZVelocity = 600.f; // 设置跳跃初速度
+                 GetCharacterMovement()-&gt;GravityScale = 1.5f;   // 调整重力
+             }
+        }</code></pre>
+<h2 class="atx" id="角色滑翔">角色滑翔</h2>
+<pre><code class="fenced-code-block">// 在角色类中设置滑翔参数
+void AMyCharacter::SetupGliding()
+{
+    GetCharacterMovement()-&gt;GravityScale = 0.2f; // 减小重力影响
+    GetCharacterMovement()-&gt;AirControl = 0.8f;  // 增加空中控制
+    GetCharacterMovement()-&gt;BrakingDecelerationFlying = 100.f; // 滑翔减速
+}</code></pre>
+<h2 class="atx" id="地面检测">地面检测</h2>
+<p>C++ 版本:</p>
+<pre><code class="fenced-code-block">if (GetCharacterMovement()-&gt;IsMovingOnGround())
+{
+    // 玩家在地面上
+}</code></pre>
+<p>Blueprint版本:
+<code> 获取你的角色移动组件 -&gt; IsMovingOnGround 节点</code></p>
+<h2 class="atx" id="角色转向逻辑（函数）">角色转向逻辑（函数）</h2>
+<p>1.声明转向函数（参数固定格式）</p>
+<pre><code class="fenced-code-block">         void Look(const FInputActionValue&amp; Value);</code></pre>
+<p>构造函数中实现：</p>
+<pre><code class="fenced-code-block">         //角色根据运动方向旋转
+         GetCharacterMovement()-&gt;bOrientRotationToMovement = true;
+         GetCharacterMovement()-&gt;RotationRate = FRotator(0.f, 400.f, 0.f);</code></pre>
+<p>2.逻辑实现</p>
+<pre><code class="fenced-code-block">         void AMyPlayer::Look(const FInputActionValue&amp; Value)
+         {
+                 FVector2D LookVector = Value.Get&lt;FVector2D&gt;();
+                 if (Controller) {
+                         AddControllerYawInput(LookVector.X);
+                         AddControllerPitchInput(LookVector.Y);
+                 }
+         }</code></pre>
+<p>添加进玩家移动函数中</p>
+<pre><code class="fenced-code-block">         //玩家转向设置
+
+         if (InputVector.Y|| InputVector.X) {
+                 SetActorRotation(YawRotation);
+         }</code></pre>
+<p>缓慢旋转</p>
+<pre><code class="fenced-code-block">         void AYourCharacter::Tick(float DeltaTime)
+         {
+             Super::Tick(DeltaTime);
+
+         // 目标旋转（假设为Yaw转向90度，Pitch和Roll不变）
+             FRotator TargetRotation = FRotator(0.f, 90.f, 0.f); 
+
+             // 当前旋转
+             FRotator CurrentRotation = GetActorRotation();
+
+            // 使用RInterpTo平滑插值（参数：当前值、目标值、插值速度、DeltaTime）
+            FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, 2.0f); 
+
+            // 应用旋转
+            SetActorRotation(NewRotation);
+        }</code></pre>
+<h2 class="atx" id="弹簧臂伸缩（函数）">弹簧臂伸缩（函数）</h2>
+<p>1.声明转向函数（参数固定格式）</p>
+<pre><code class="fenced-code-block">         UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+         USpringArmComponent* SpringArm;
+
+         UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+         float SpringArmLenghtMax = 500;
+
+         UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+         float SpringArmLenghtMin = 50;
+
+         void SetSpringArm(const FInputActionValue&amp; Value);</code></pre>
+<p>2.逻辑实现</p>
+<pre><code class="fenced-code-block">         void AMyPlayer::SetSpringArm(const FInputActionValue&amp; Value)
+         {                      
+                 if (SpringArm-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &lt; SpringArmLenghtMax
+                         &amp;&amp; SpringArm-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &gt; SpringArmLenghtMin)
+                 {
+                 SpringArm-&gt;TargetArmLength -= Value.Get&lt;FVector&gt;().X * SpringArmSpeed;
+                 }
+                 if (SpringArm-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &gt; SpringArmLenghtMax)
+                 {
+                        SpringArm-&gt;TargetArmLength = SpringArmLenghtMax - 1;
+                }
+                if (SpringArm-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &lt; SpringArmLenghtMin)
+                {
+                        SpringArm-&gt;TargetArmLength = SpringArmLenghtMin + 1;
+                }
+        }</code></pre>
+<h3 class="atx" id="弹簧臂设置完整实例">弹簧臂设置完整实例</h3>
+<pre><code class="fenced-code-block">            //弹簧臂伸缩最大值
+            UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+            float SpringArmLenghtMax = 500;
+            //弹簧臂伸缩最小值
+            UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+            float SpringArmLenghtMin = 50;
+            //弹簧臂伸缩速度
+            UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+            float SpringArmSpeed = 50;
+           //弹簧臂伸缩控制函数
+           void SetSpringArm(const FInputActionValue&amp; Value);</code></pre>
+<pre><code class="fenced-code-block">             //创建弹簧臂伸缩动作
+             UPROPERTY(EditAnywhere, Category = "EnhancedInput")
+             UInputAction* SpringArmAction;</code></pre>
+<pre><code class="fenced-code-block">             //不要让玩家随着控制器旋转
+             bUseControllerRotationPitch = false;
+             bUseControllerRotationRoll = false;
+             bUseControllerRotationYaw = false;
+             //相机杆旋转 相机不旋转
+             SpringArmComponent-&gt;bUsePawnControlRotation = true;
+             FollowCameraComponent-&gt;bUsePawnControlRotation = false;
+
+             //角色根据运动方向旋转
+            GetCharacterMovement()-&gt;bOrientRotationToMovement = true;
+            GetCharacterMovement()-&gt;RotationRate = FRotator(0.f, 400.f, 0.f);
+
+             void AMainPlayer::SetSpringArm(const FInputActionValue&amp; Value)
+             {
+                     if (SpringArmComponent-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &lt; SpringArmLenghtMax
+                             &amp;&amp; SpringArmComponent-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &gt; SpringArmLenghtMin)
+                     {
+                             SpringArmComponent-&gt;TargetArmLength -= Value.Get&lt;FVector&gt;().X * SpringArmSpeed;
+                     }
+                     if (SpringArmComponent-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &gt; SpringArmLenghtMax)
+                     {
+                            SpringArmComponent-&gt;TargetArmLength = SpringArmLenghtMax - 1;
+                    }
+                    if (SpringArmComponent-&gt;TargetArmLength - Value.Get&lt;FVector&gt;().X &lt; SpringArmLenghtMin)
+                    {
+                            SpringArmComponent-&gt;TargetArmLength = SpringArmLenghtMin + 1;
+                    }
+            }</code></pre>
+<pre><code class="fenced-code-block">             Input-&gt;BindAction(SpringArmAction, ETriggerEvent::Completed, this, &amp;AMainPlayer::SetSpringArm);</code></pre>
+<h1 class="atx" id="debug信息产生">Debug信息产生</h1>
+<p>在屏幕上打印字符</p>
+<pre><code class="fenced-code-block">GEngine-&gt;AddOnScreenDebugMessage(-1, 1, FColor::Blue, FString::Printf(TEXT("Jump test")));</code></pre>
+<p>在日志中输出</p>
+<pre><code class="fenced-code-block">UE_LOG(LogTemp, Warning, TEXT("my message"));</code></pre>
+<p>两个坐标之间画一条线</p>
+<pre><code class="fenced-code-block">DrawDebugLine(GetWorld(), Start, End, FColor::Blue);</code></pre>
+<p>输出物体坐标信息</p>
+<pre><code class="fenced-code-block">             // 格式化坐标信息
+                     FString LocationString = FString::Printf(TEXT("Location: X=%.2f, Y=%.2f, Z=%.2f"), ActorLocation.X, ActorLocation.Y, ActorLocation.Z);
+
+             // 在屏幕上显示坐标信息
+                     GEngine-&gt;AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, LocationString);</code></pre>
+<h1 class="atx" id="bug合集">Bug合集</h1>
+<h2 class="atx" id="头文件位置bug">头文件位置bug</h2>
+<pre><code class="fenced-code-block">      #include "MyPlayer.generated.h"
+    //必须放在最后面</code></pre>
+<h1 class="atx" id="enemy的自动生成">Enemy的自动生成</h1>
+<p><img alt="alt text" src="image-4.png"></p>
+<pre><code class="fenced-code-block">UPROPERTY(EditAnywhere, BlueprintReadWrite)
+bool CanRefrshEnemy;
+
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
+float GameStartTime;
+
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
+int32 EnemyNumber;
+int32 ThisStage;</code></pre>
+<pre><code class="fenced-code-block">AEnemyRefreshPoint::AEnemyRefreshPoint()
+{
+    PrimaryActorTick.bCanEverTick = true;
+    SpwnLocation = GetActorLocation();
+    GameStartTime = 0;
+    EnemyNumber = 0;
+    CanRefrshEnemy = true;
+}</code></pre>
+<pre><code class="fenced-code-block">void AEnemyRefreshPoint::Tick(float DeltaTime)
+{
+        Super::Tick(DeltaTime);
+        GameStartTime += 0.1;
+        if(GameStartTime-0.1!=GameStartTime){
+                ThisStage = GameStartTime;
+        }
+        switch (ThisStage) {
+        case 100: EnemyNumber += 1; CanRefrshEnemy = true; break;
+        case 200: EnemyNumber += 1; CanRefrshEnemy = true; break;
+        case 300: EnemyNumber += 1; CanRefrshEnemy = true; break;
+        case 400: EnemyNumber += 1; CanRefrshEnemy = true; break;
+        }
+}</code></pre>
+<p><img alt="alt text" src="image-5.png"></p>
+<h1 class="atx" id="enemy类中的相关设置">Enemy类中的相关设置</h1>
+<p><strong>声明变量&amp;&amp;函数</strong></p>
+<pre><code class="fenced-code-block">bool CanSeePlayer = false;
+
+TObjectPtr&lt;ACharacter&gt; TargetCharacter;
+
+bool LineTraceActor(AActor* TargetActor);
+
+bool CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) const;</code></pre>
+<h2 class="atx" id="enemy自动面向玩家（函数）">Enemy自动面向玩家（函数）</h2>
+<pre><code class="fenced-code-block">bool AEnemy::LineTraceActor(AActor* TargetActor)
+{
+        if (TargetActor == nullptr)
+        {
+                return false;
+        }
+        FVector Start = GetActorLocation();
+        FVector End = TargetActor-&gt;GetActorLocation();
+        if (CanSeeActor(TargetActor, Start, End)) {
+                FRotator DirectRotation = UKismetMathLibrary::FindLookAtRotation(Start, End);
+                SetActorRotation(DirectRotation);
+                return true;
+        }
+        return false;
+}</code></pre>
+<h2 class="atx" id="enemy能否看见玩家（函数）">Enemy能否看见玩家（函数）</h2>
+<pre><code class="fenced-code-block">    TargetCharacter = UGameplayStatics::GetPlayerCharacter(this, 0)</code></pre>
+<pre><code class="fenced-code-block">bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) const
+{
+        if (TargetActor == nullptr)
+        {
+                return false;
+        }
+        FHitResult Hit;
+        ECollisionChannel Channel = ECollisionChannel::ECC_Visibility;
+        //忽略玩家和敌人（this）
+        FCollisionQueryParams QueryParams;
+        QueryParams.AddIgnoredActor(this);
+        QueryParams.AddIgnoredActor(TargetActor);
+
+                //射线检测
+        GetWorld()-&gt;LineTraceSingleByChannel(Hit, Start, End,Channel,QueryParams);
+
+        //画线
+        DrawDebugLine(GetWorld(), Start, End, FColor::Blue);
+        return !Hit.bBlockingHit;
+}</code></pre>
+<h1 class="atx" id="component（组件）">Component（组件）</h1>
+<p><img alt="alt text" src="image-6.png"></p>
+<h1 class="atx" id="uboxcomponent碰撞箱">UBoxComponent碰撞箱</h1>
+<pre><code class="fenced-code-block">         //声明碰撞箱组件
+         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+         class UBoxComponent* CollisionComponent;
+
+          // 创建碰撞组件
+          CollisionComponent = CreateDefaultSubobject&lt;UBoxComponent&gt;(TEXT("CollisionComponent"));
+          //将骨骼网格体设为父级，设置插槽位置为”Attack“
+          CollisionComponent-&gt;SetupAttachment(GetMesh(), TEXT("Attack"));</code></pre>
+<p><strong>碰撞组件的应用</strong></p>
+<p>碰撞开始和碰撞结束函数的声明</p>
+<pre><code class="fenced-code-block">         UFUNCTION()
+         void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult&amp; SweepResult);
+
+         UFUNCTION()
+         void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);</code></pre>
+<pre><code class="fenced-code-block">         // 绑定碰撞事件，在BeginPlay中
+         CollisionComponent-&gt;OnComponentBeginOverlap.AddDynamic(this, &amp;AEnemyBase::OnOverlapBegin);
+         CollisionComponent-&gt;OnComponentEndOverlap.AddDynamic(this, &amp;AEnemyBase::OnOverlapEnd);</code></pre>
+<h1 class="atx" id="子弹（aactor类）">子弹（AActor类）</h1>
+<p>头文件中声明</p>
+<pre><code class="fenced-code-block">             UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+             TObjectPtr&lt;USphereComponent&gt; SphereComponent;
+
+             UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+             TObjectPtr&lt;UProjectileMovementComponent&gt; ProjecttileMovement;
+
+             FORCEINLINE UProjectileMovementComponent* GetProjecttileMovementComponent() const { return ProjecttileMovement; }</code></pre>
+<p>所需头文件</p>
+<pre><code class="fenced-code-block">             #include "Components/SphereComponent.h"
+             #include "GameFramework/ProjectileMovementComponent.h"</code></pre>
+<p>构造函数中</p>
+<pre><code class="fenced-code-block">             SphereComponent = CreateDefaultSubobject&lt;USphereComponent&gt;("Sphere Collision");
+             SphereComponent-&gt;SetSphereRadius(35.f);
+             SetRootComponent(SphereComponent);
+
+             ProjecttileMovement = CreateDefaultSubobject&lt;UProjectileMovementComponent&gt;("Projecttile Movement");
+             ProjecttileMovement-&gt;InitialSpeed = 1300.f;</code></pre>
+<h1 class="atx" id="actor生成">Actor生成</h1>
+<p><img alt="alt text" src="image-7.png"></p>
+<h2 class="atx" id="spawnactor">SpawnActor</h2>
+<pre><code class="fenced-code-block">TSubclassOf&lt;ABallProjecttile&gt; BallProjecttileClass;
+//目标物体，在头文件中声明</code></pre>
+<pre><code class="fenced-code-block">GetWorld()-&gt;SpawnActor&lt;ABallProjecttile&gt;(BallProjecttileClass, SpwnLocation, GetActorRotation());
+//（目标物体，位置，朝向）</code></pre>
+<h2 class="atx" id="spawnactordeferred">SpawnActorDeferred</h2>
+<pre><code class="fenced-code-block">FTransform SpawnTransform(GetActorRotation(), SpwnLocation);
+ABallProjecttile* Projectile(GetWorld()-&gt;SpawnActorDeferred&lt;ABallProjecttile&gt;(BallProjecttileClass, SpawnTransform));
+
+Projectile-&gt;GetProjecttileMovementComponent()-&gt;InitialSpeed = 2100;
+Projectile-&gt;FinishSpawning(SpawnTransform);</code></pre>
+<h1 class="atx" id="计数器">计数器</h1>
+<pre><code class="fenced-code-block">         FTimerHandle TimerHandle; // 确保 TimerHandle 在类里声明  </code></pre>
+<pre><code class="fenced-code-block">         GetWorld()-&gt;GetTimerManager().SetTimer(TimerHandle, this, &amp;AMyActor::ChangeBoolValue, 5.0f, false);</code></pre>
+<p>参数解释
+<strong>1. TimerHandle:</strong>
+<code>○ 类型：FTimerHandle ○ 作用：用于唯一标识这个定时器。你可以使用这个句柄来管理定时器，例如取消定时器或检查定时器的状态。</code>
+<strong>2. this:</strong>
+<code>○ 类型：AActor*（或任何 UObject 的指针） ○ 作用：指向调用定时器的对象。在这个例子中，它是当前的 AMyActor 实例。定时器会在该对象的上下文中调用指定的函数。</code>
+<strong>3. &amp;AMyActor::ChangeBoolValue:</strong>
+<code>○ 类型：void(AMyActor::*)() ○ 作用：指向要在定时器到期时调用的成员函数。在这个例子中，它是 ChangeBoolValue 函数的指针。定时器将在指定的延迟后调用这个函数。</code>
+<strong>4. 5.0f:</strong>
+<code>○ 类型：float ○ 作用：延迟时间，以秒为单位。在这个例子中，定时器将在 5 秒后触发 ChangeBoolValue 函数。</code>
+<strong>5. false:</strong>
+<code>○ 类型：bool ○ 作用：指定定时器是否应该循环。如果为 true，定时器将在每次调用后重新开始计时；如果为 false，定时器只会调用一次。在这个例子中，我们希望定时器只调用一次，所以设置为 false。</code></p>
+<p>使用实列</p>
+<pre><code class="fenced-code-block">         FTimerHandle FireTimerHandle;
+
+         float FireInterval = 3.f;
+         float FireDelay = 0.5f;</code></pre>
+<pre><code class="fenced-code-block">         if (CanSeePlayer)
+         {
+                 GetWorldTimerManager().SetTimer(FireTimerHandle, this, &amp;AEnemy::Fire, FireInterval, true, FireDelay);
+         }
+         else
+         {
+                 GetWorldTimerManager().ClearTimer(FireTimerHandle);
+         }</code></pre>
+<h1 class="atx" id="射线检测">射线检测</h1>
+<pre><code class="fenced-code-block">        //射线检测
+        GetWorld()-&gt;LineTraceSingleByChannel(Hit, Start, End,Channel,QueryParams);</code></pre>
+<h2 class="atx" id="鼠标点击，获取对应物品信息">鼠标点击，获取对应物品信息</h2>
+<p>使用射线检测功能实现</p>
+<p><code>注意事项： 需要获取玩家控制器，在玩家控制器中实现部分操作！！！</code></p>
+<pre><code class="fenced-code-block">         void AMyCharacter::BeginPlay()
+         {
+             Super::BeginPlay();
+
+             // 获取玩家控制器
+             APlayerController* PlayerController = Cast&lt;APlayerController&gt;(GetController());
+             if (PlayerController)
+             {
+                 // 启用鼠标光标和点击事件
+                PlayerController-&gt;bShowMouseCursor = true;
+                PlayerController-&gt;bEnableClickEvents = true;
+                PlayerController-&gt;bEnableMouseOverEvents = true;
+            }
+        }</code></pre>
+<pre><code class="fenced-code-block">         void AMyCharacter::HandleLeftMouseClick()
+         {
+             APlayerController* PlayerController = Cast&lt;APlayerController&gt;(GetController());
+             if (PlayerController)
+             {
+                 FVector WorldLocation, WorldDirection;
+                 if (PlayerController-&gt;DeprojectMousePositionToWorld(WorldLocation, WorldDirection))
+                 {
+                     FHitResult HitResult;
+                    FCollisionQueryParams CollisionParams;
+                    CollisionParams.bTraceComplex = true;
+        if (GetWorld()-&gt;LineTraceSingleByChannel(HitResult, WorldLocation, WorldLocation + WorldDirection * 10000, ECC_Visibility, CollisionParams))
+                    {
+                        AActor* HitActor = HitResult.GetActor();
+                        if (HitActor)
+                        {
+                            UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *HitActor-&gt;GetName());
+                        }
+                    }
+                }
+            }
+        }</code></pre>
+<h1 class="atx" id="随机数生成">随机数生成</h1>
+<pre><code class="fenced-code-block">int32 RandomInt = FMath::RandRange(0, 1);</code></pre>
+<h1 class="atx" id="碰撞检测">碰撞检测</h1>
+<p>在Unreal Engine (UE) 中使用 C++ 绑定碰撞检测通常涉及以下步骤：</p>
+<h2 class="atx" id="1-创建自定义-actor-类">1. 创建自定义 Actor 类</h2>
+<p>首先，创建一个自定义的 Actor 类，用于处理碰撞检测。</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// MyActor.h</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">pragma</span> <span class="token expression">once</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"CoreMinimal.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"GameFramework/Actor.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"MyActor.generated.h"</span></span>
+
+<span class="token function">UCLASS</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">YOURPROJECTNAME_API</span> AMyActor <span class="token operator">:</span> <span class="token keyword">public</span> AActor
+<span class="token punctuation">{</span>
+    <span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>  
+    <span class="token comment">// 构造函数</span>
+    <span class="token function">AMyActor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+    <span class="token comment">// 游戏开始时调用</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>  
+    <span class="token comment">// 每帧调用</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">Tick</span><span class="token punctuation">(</span><span class="token keyword">float</span> DeltaTime<span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 碰撞组件</span>
+    <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Collision"</span><span class="token punctuation">)</span>
+    <span class="token keyword">class</span> <span class="token class-name">UBoxComponent</span><span class="token operator">*</span> CollisionComponent<span class="token punctuation">;</span>
+
+    <span class="token comment">// 碰撞处理函数</span>
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">OnOverlapBegin</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">,</span> <span class="token keyword">bool</span> bFromSweep<span class="token punctuation">,</span> <span class="token keyword">const</span> FHitResult<span class="token operator">&amp;</span> SweepResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">OnOverlapEnd</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h2 class="atx" id="2-实现碰撞检测逻辑">2. 实现碰撞检测逻辑</h2>
+<p>在 <code>.cpp</code> 文件中实现碰撞检测逻辑。</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// MyActor.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"MyActor.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Components/BoxComponent.h"</span></span>
+
+<span class="token comment">// 构造函数</span>
+<span class="token class-name">AMyActor</span><span class="token double-colon punctuation">::</span><span class="token function">AMyActor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 设置此 Actor 调用 Tick() 每帧</span>
+    PrimaryActorTick<span class="token punctuation">.</span>bCanEverTick <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 创建碰撞组件</span>
+    CollisionComponent <span class="token operator">=</span> <span class="token generic-function"><span class="token function">CreateDefaultSubobject</span><span class="token generic class-name"><span class="token operator">&lt;</span>UBoxComponent<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"CollisionComponent"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    RootComponent <span class="token operator">=</span> CollisionComponent<span class="token punctuation">;</span>
+
+    <span class="token comment">// 设置碰撞响应</span>
+    CollisionComponent<span class="token operator">-&gt;</span><span class="token function">SetCollisionProfileName</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Trigger"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    CollisionComponent<span class="token operator">-&gt;</span><span class="token function">SetGenerateOverlapEvents</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 游戏开始时调用</span>
+<span class="token keyword">void</span> <span class="token class-name">AMyActor</span><span class="token double-colon punctuation">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">Super</span><span class="token double-colon punctuation">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 绑定碰撞事件</span>
+    CollisionComponent<span class="token operator">-&gt;</span>OnComponentBeginOverlap<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AMyActor<span class="token double-colon punctuation">::</span>OnOverlapBegin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    CollisionComponent<span class="token operator">-&gt;</span>OnComponentEndOverlap<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AMyActor<span class="token double-colon punctuation">::</span>OnOverlapEnd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 每帧调用</span>
+<span class="token keyword">void</span> <span class="token class-name">AMyActor</span><span class="token double-colon punctuation">::</span><span class="token function">Tick</span><span class="token punctuation">(</span><span class="token keyword">float</span> DeltaTime<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">Super</span><span class="token double-colon punctuation">::</span><span class="token function">Tick</span><span class="token punctuation">(</span>DeltaTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 碰撞开始时的处理函数</span>
+<span class="token keyword">void</span> <span class="token class-name">AMyActor</span><span class="token double-colon punctuation">::</span><span class="token function">OnOverlapBegin</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">,</span> <span class="token keyword">bool</span> bFromSweep<span class="token punctuation">,</span> <span class="token keyword">const</span> FHitResult<span class="token operator">&amp;</span> SweepResult<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>OtherActor <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>OtherActor <span class="token operator">!=</span> <span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> OtherComp<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Overlap Begin with: %s"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">*</span>OtherActor<span class="token operator">-&gt;</span><span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 碰撞结束时的处理函数</span>
+<span class="token keyword">void</span> <span class="token class-name">AMyActor</span><span class="token double-colon punctuation">::</span><span class="token function">OnOverlapEnd</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>OtherActor <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>OtherActor <span class="token operator">!=</span> <span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> OtherComp<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Overlap End with: %s"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">*</span>OtherActor<span class="token operator">-&gt;</span><span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 class="atx" id="3-在编辑器中放置-actor">3. 在编辑器中放置 Actor</h2>
+<p>编译代码后，在 UE 编辑器中找到你的 <code>AMyActor</code> 类，并将其拖放到场景中。</p>
+<h2 class="atx" id="4-测试碰撞检测">4. 测试碰撞检测</h2>
+<p>运行游戏并观察日志输出，当其他 Actor 与 <code>AMyActor</code> 发生碰撞时，你会看到相应的日志信息。</p>
+<h2 class="atx" id="5-进一步自定义">5. 进一步自定义</h2>
+<p>你可以根据需要进一步自定义碰撞检测的逻辑，例如：</p>
+<ul>
+<li>过滤特定类型的 Actor。</li>
+<li>处理不同类型的碰撞事件（如 <code>Hit</code> 事件）。</li>
+<li>添加更多的碰撞组件或调整碰撞形状。</li>
+</ul>
+<h2 class="atx" id="注意事项">注意事项</h2>
+<ul>
+<li>确保在 <code>CollisionComponent</code> 上启用了 <code>Generate Overlap Events</code>。</li>
+<li>根据需要设置碰撞通道和响应，以便正确处理碰撞事件。</li>
+</ul>
+<p>通过这些步骤，你可以在 UE 中使用 C++ 绑定并处理碰撞检测。</p>
+<h1 class="atx" id="ai自动寻路">AI自动寻路</h1>
+<p>1.添加导航网格到地图中
+<img alt="alt text" src="image-8.png">
+2.使用导航网格覆盖需要导航的位置</p>
+<p>3.在场景中选择导航网格，按P键显示导航网格
+<img alt="alt text" src="image-9.png"></p>
+<h1 class="atx" id="非ai物体平移">非AI物体平移</h1>
+<pre><code class="fenced-code-block language-cpp"><span class="token keyword">void</span> <span class="token class-name">ABlockMove</span><span class="token double-colon punctuation">::</span><span class="token function">BlockMove</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    FVector BlockPoint <span class="token operator">=</span> <span class="token keyword">this</span><span class="token operator">-&gt;</span><span class="token function">GetActorLocation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    FVector MoveLocation <span class="token operator">=</span> <span class="token punctuation">(</span>TagerPoint <span class="token operator">-</span> BlockPoint<span class="token punctuation">)</span><span class="token operator">*</span>BlockMoveSpeed<span class="token punctuation">;</span>
+    FVector NewLocation <span class="token operator">=</span> BlockPoint <span class="token operator">+</span> MoveLocation<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token operator">-&gt;</span><span class="token function">SetActorLocation</span><span class="token punctuation">(</span>NewLocation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h1 class="atx" id="ui">UI</h1>
+<h2 class="atx" id="获取控件类中的变量">获取控件类中的变量</h2>
+<p><img alt="alt text" src="image-10.png"></p>
+<h2 class="atx" id="显示鼠标光标">显示鼠标光标</h2>
+<p>1.获取玩家控制器（蓝图节点：Get Player Contoller）
+2.从玩家控制器中设置显示鼠标光标（蓝图节点：Set Show Mouse Cursor）
+<img alt="alt text" src="image-11.png"></p>
+<h2 class="atx" id="将ui显示到视口">将UI显示到视口</h2>
+<p><img alt="alt text" src="image-12.png"></p>
+<h1 class="atx" id="头文件集合">头文件集合</h1>
+<pre><code class="fenced-code-block language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"GameFramework/PlayerController.h"</span><span class="token comment">//玩家控制器类</span></span></code></pre>
+<h1 class="atx" id="蓝图">蓝图</h1>
+<h2 class="atx" id="序列执行">序列执行</h2>
+<p><img alt="alt text" src="image-13.png"></p>
+<h2 class="atx" id="获取组件所属类">获取组件所属类</h2>
+<p>Get Owner
+<img alt="alt text" src="image-14.png"></p>
+<h1 class="atx" id="ue变量名">UE变量名</h1>
+<h2 class="atx" id="tarray">TArray</h2>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 创建数组</span>
+TArray<span class="token operator">&lt;</span>int32<span class="token operator">&gt;</span> IntArray<span class="token punctuation">;</span>
+
+<span class="token comment">// 添加元素</span>
+IntArray<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+IntArray<span class="token punctuation">.</span><span class="token function">Emplace</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 原地构造，效率更高</span>
+
+<span class="token comment">// 访问元素</span>
+int32 FirstElement <span class="token operator">=</span> IntArray<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 遍历数组</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span>int32 Num <span class="token operator">:</span> IntArray<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 删除元素</span>
+IntArray<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 按值删除</span>
+IntArray<span class="token punctuation">.</span><span class="token function">RemoveAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 按索引删除</span></code></pre>
+<h1 class="atx" id="枚举类型">枚举类型</h1>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 在头文件中定义状态枚举</span>
+<span class="token function">UENUM</span><span class="token punctuation">(</span>BlueprintType<span class="token punctuation">)</span>
+<span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">ECharacterState</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">uint8</span></span>
+<span class="token punctuation">{</span>
+    Idle<span class="token punctuation">,</span>
+    Walking<span class="token punctuation">,</span>
+    Running<span class="token punctuation">,</span>
+    Jumping<span class="token punctuation">,</span>
+    Falling
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 当前状态变量</span>
+ECharacterState CurrentState<span class="token punctuation">;</span>
+
+<span class="token comment">// 状态更新函数</span>
+<span class="token keyword">void</span> <span class="token function">UpdateState</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">switch</span><span class="token punctuation">(</span>CurrentState<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> ECharacterState<span class="token double-colon punctuation">::</span>Idle<span class="token operator">:</span>
+            <span class="token comment">// 闲置逻辑</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> ECharacterState<span class="token double-colon punctuation">::</span>Walking<span class="token operator">:</span>
+            <span class="token comment">// 行走逻辑</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token comment">// 其他状态...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 状态转换函数</span>
+<span class="token keyword">void</span> <span class="token function">SetState</span><span class="token punctuation">(</span>ECharacterState NewState<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>CurrentState <span class="token operator">!=</span> NewState<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">ExitState</span><span class="token punctuation">(</span>CurrentState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        CurrentState <span class="token operator">=</span> NewState<span class="token punctuation">;</span>
+        <span class="token function">EnterState</span><span class="token punctuation">(</span>NewState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h1 class="atx" id="获取世界中的目标类">获取世界中的目标类</h1>
+<p>头文件</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Kismet/GameplayStatics.h"</span></span></code></pre>
+<pre><code class="fenced-code-block language-cpp">UWorld<span class="token operator">*</span> world <span class="token operator">=</span> <span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>world<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        AActor<span class="token operator">*</span> FoundPawn <span class="token operator">=</span> <span class="token class-name">UGameplayStatics</span><span class="token double-colon punctuation">::</span><span class="token function">GetActorOfClass</span><span class="token punctuation">(</span>world<span class="token punctuation">,</span> <span class="token class-name">ABP_Player</span><span class="token double-colon punctuation">::</span><span class="token function">StaticClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<h1 class="atx" id="事件委托">事件委托</h1>
+<h2 class="atx" id="虚幻引擎委托delegate详细指南">虚幻引擎委托(Delegate)详细指南</h2>
+<h3 class="atx" id="1-委托的基本概念">1. 委托的基本概念</h3>
+<p><strong>委托是什么？</strong>
+委托是一种类型安全的函数指针，允许你调用一个或多个函数，而无需知道这些函数的具体实现。简单说，就是**"当A发生时，自动调用B、C、D..."**的机制。</p>
+<h3 class="atx" id="2-委托的四种主要类型">2. 委托的四种主要类型</h3>
+<h4 class="atx" id="21-单播委托-unicast-delegates">2.1 单播委托 (Unicast Delegates)</h4>
+<p><strong>特点：</strong> 只能绑定一个函数
+<strong>用途：</strong> 回调函数、简单事件处理</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 声明</span>
+<span class="token function">DECLARE_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnItemPickedUp<span class="token punctuation">,</span> FName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 使用</span>
+<span class="token keyword">class</span> <span class="token class-name">APlayer</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    FOnItemPickedUp OnItemPickedUp<span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">PickUpItem</span><span class="token punctuation">(</span>FName ItemName<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// ... 拾取逻辑</span>
+
+        <span class="token comment">// 触发委托</span>
+        OnItemPickedUp<span class="token punctuation">.</span><span class="token function">ExecuteIfBound</span><span class="token punctuation">(</span>ItemName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 绑定</span>
+Player<span class="token punctuation">.</span>OnItemPickedUp<span class="token punctuation">.</span><span class="token function">BindRaw</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AInventory<span class="token double-colon punctuation">::</span>HandleItemPickedUp<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="22-多播委托-multicast-delegates">2.2 多播委托 (Multicast Delegates)</h4>
+<p><strong>特点：</strong> 可以绑定多个函数
+<strong>用途：</strong> 事件系统、观察者模式</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 声明</span>
+<span class="token function">DECLARE_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnPlayerDied<span class="token punctuation">,</span> APlayer<span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 使用</span>
+<span class="token keyword">class</span> <span class="token class-name">AGameMode</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    FOnPlayerDied OnPlayerDied<span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">PlayerDied</span><span class="token punctuation">(</span>APlayer<span class="token operator">*</span> Player<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 广播给所有监听者</span>
+        OnPlayerDied<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span>Player<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 多个对象可以绑定到同一个委托</span>
+GameMode<span class="token punctuation">.</span>OnPlayerDied<span class="token punctuation">.</span><span class="token function">AddRaw</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AUI<span class="token double-colon punctuation">::</span>ShowDeathScreen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+GameMode<span class="token punctuation">.</span>OnPlayerDied<span class="token punctuation">.</span><span class="token function">AddRaw</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AAchievements<span class="token double-colon punctuation">::</span>HandlePlayerDeath<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="23-动态委托-dynamic-delegates">2.3 动态委托 (Dynamic Delegates)</h4>
+<p><strong>特点：</strong> 支持序列化，可以在蓝图中使用
+<strong>用途：</strong> 蓝图/C++混合开发</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 声明</span>
+<span class="token function">DECLARE_DYNAMIC_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnHealthChanged<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 使用</span>
+<span class="token function">UCLASS</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">AHealthComponent</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">UActorComponent</span></span>
+<span class="token punctuation">{</span>
+    <span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">)</span>
+    FOnHealthChanged OnHealthChanged<span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">SetHealth</span><span class="token punctuation">(</span><span class="token keyword">float</span> NewHealth<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Health <span class="token operator">=</span> NewHealth<span class="token punctuation">;</span>
+        OnHealthChanged<span class="token punctuation">.</span><span class="token function">ExecuteIfBound</span><span class="token punctuation">(</span>NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="24-动态多播委托-dynamic-multicast-delegates">2.4 动态多播委托 (Dynamic Multicast Delegates)</h4>
+<p><strong>最常用的类型！</strong>
+<strong>特点：</strong> 多播 + 动态，支持蓝图和序列化</p>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 声明</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnScoreChanged<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> NewScore<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">UCLASS</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">APlayerState</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">AActor</span></span>
+<span class="token punctuation">{</span>
+    <span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token comment">// 委托实例</span>
+    <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">)</span>
+    FOnScoreChanged OnScoreChanged<span class="token punctuation">;</span>
+
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span>BlueprintCallable<span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">AddScore</span><span class="token punctuation">(</span>int32 Points<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Score <span class="token operator">+=</span> Points<span class="token punctuation">;</span>
+        OnScoreChanged<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span>Score<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 触发所有绑定的函数</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h3 class="atx" id="3-参数数量的不同声明">3. 参数数量的不同声明</h3>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 无参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE</span><span class="token punctuation">(</span>FOnGameStarted<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 1个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnHealthChanged<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 2个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams</span><span class="token punctuation">(</span>FOnDamageTaken<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> Damage<span class="token punctuation">,</span> AActor<span class="token operator">*</span><span class="token punctuation">,</span> DamageCauser<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 3个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams</span><span class="token punctuation">(</span>FOnItemCollected<span class="token punctuation">,</span> FName<span class="token punctuation">,</span> ItemName<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> Quantity<span class="token punctuation">,</span> APlayer<span class="token operator">*</span><span class="token punctuation">,</span> Collector<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 4个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams</span><span class="token punctuation">(</span>FOnQuestUpdated<span class="token punctuation">,</span> FName<span class="token punctuation">,</span> QuestID<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> Progress<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> Target<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token punctuation">,</span> IsCompleted<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 5个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams</span><span class="token punctuation">(</span>FOnMultiplayerEvent<span class="token punctuation">,</span> FString<span class="token punctuation">,</span> EventType<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> PlayerID<span class="token punctuation">,</span> FVector<span class="token punctuation">,</span> Location<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> Value<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token punctuation">,</span> IsCritical<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 6个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_SixParams</span><span class="token punctuation">(</span>FOnComplexEvent<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 7个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_SevenParams</span><span class="token punctuation">(</span>FOnVeryComplexEvent<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 8个参数</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_EightParams</span><span class="token punctuation">(</span>FOnExtremelyComplexEvent<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 9个参数（最大）</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_NineParams</span><span class="token punctuation">(</span>FOnMaxParamsEvent<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 class="atx" id="4-绑定方式的详细说明">4. 绑定方式的详细说明</h3>
+<h4 class="atx" id="41-绑定到uobject成员函数">4.1 绑定到UObject成员函数</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 动态委托使用 AddDynamic</span>
+OnHealthChanged<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AMyActor<span class="token double-colon punctuation">::</span>HandleHealthChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 非动态委托使用 AddUObject</span>
+OnPlayerDied<span class="token punctuation">.</span><span class="token function">AddUObject</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AGameMode<span class="token double-colon punctuation">::</span>HandlePlayerDeath<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="42-绑定到原始c函数">4.2 绑定到原始C++函数</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 适用于非UObject类</span>
+OnGameEvent<span class="token punctuation">.</span><span class="token function">AddRaw</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>FMyUtilityClass<span class="token double-colon punctuation">::</span>HandleGameEvent<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="43-绑定到lambda函数">4.3 绑定到Lambda函数</h4>
+<pre><code class="fenced-code-block language-cpp">OnScoreChanged<span class="token punctuation">.</span><span class="token function">AddLambda</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">]</span><span class="token punctuation">(</span>int32 NewScore<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Score changed to: %d"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> NewScore<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">UpdateScoreUI</span><span class="token punctuation">(</span>NewScore<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="44-绑定到静态函数">4.4 绑定到静态函数</h4>
+<pre><code class="fenced-code-block language-cpp">OnConfigLoaded<span class="token punctuation">.</span><span class="token function">AddStatic</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>FConfigManager<span class="token double-colon punctuation">::</span>HandleConfigLoaded<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="45-绑定到共享指针">4.5 绑定到共享指针</h4>
+<pre><code class="fenced-code-block language-cpp">TSharedPtr<span class="token operator">&lt;</span>FMyClass<span class="token operator">&gt;</span> MyObject <span class="token operator">=</span> <span class="token generic-function"><span class="token function">MakeShared</span><span class="token generic class-name"><span class="token operator">&lt;</span>FMyClass<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+OnDataReceived<span class="token punctuation">.</span><span class="token function">AddSP</span><span class="token punctuation">(</span>MyObject<span class="token punctuation">,</span> <span class="token operator">&amp;</span>FMyClass<span class="token double-colon punctuation">::</span>HandleData<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 class="atx" id="5-完整的使用示例">5. 完整的使用示例</h3>
+<h4 class="atx" id="头文件">头文件</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// GameEvents.h</span>
+<span class="token function">UCLASS</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">AGameEventManager</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">AActor</span></span>
+<span class="token punctuation">{</span>
+    <span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">AGameEventManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 声明各种委托</span>
+    <span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE</span><span class="token punctuation">(</span>FOnGameStarted<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnPlayerHealthChanged<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams</span><span class="token punctuation">(</span>FOnPlayerLevelUp<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> NewLevel<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> PreviousLevel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 委托实例</span>
+    <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Game Events"</span><span class="token punctuation">)</span>
+    FOnGameStarted OnGameStarted<span class="token punctuation">;</span>
+
+    <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Game Events"</span><span class="token punctuation">)</span>
+    FOnPlayerHealthChanged OnPlayerHealthChanged<span class="token punctuation">;</span>
+
+    <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Game Events"</span><span class="token punctuation">)</span>
+    FOnPlayerLevelUp OnPlayerLevelUp<span class="token punctuation">;</span>
+
+    <span class="token comment">// 触发事件的方法</span>
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span>BlueprintCallable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Game Events"</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">StartGame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span>BlueprintCallable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Game Events"</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">UpdatePlayerHealth</span><span class="token punctuation">(</span><span class="token keyword">float</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span>BlueprintCallable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Game Events"</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">PlayerLevelUp</span><span class="token punctuation">(</span>int32 NewLevel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment">// 处理函数</span>
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">HandleGameStarted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">HandleHealthChanged</span><span class="token punctuation">(</span><span class="token keyword">float</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">void</span> <span class="token function">HandleLevelUp</span><span class="token punctuation">(</span>int32 NewLevel<span class="token punctuation">,</span> int32 PreviousLevel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="源文件">源文件</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// GameEvents.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"GameEvents.h"</span></span>
+
+<span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">AGameEventManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    PrimaryActorTick<span class="token punctuation">.</span>bCanEverTick <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">Super</span><span class="token double-colon punctuation">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 绑定委托到处理函数</span>
+    OnGameStarted<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AGameEventManager<span class="token double-colon punctuation">::</span>HandleGameStarted<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    OnPlayerHealthChanged<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AGameEventManager<span class="token double-colon punctuation">::</span>HandleHealthChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    OnPlayerLevelUp<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AGameEventManager<span class="token double-colon punctuation">::</span>HandleLevelUp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">StartGame</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Game Started!"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    OnGameStarted<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">UpdatePlayerHealth</span><span class="token punctuation">(</span><span class="token keyword">float</span> NewHealth<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Player health updated: %.1f"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    OnPlayerHealthChanged<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span>NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">PlayerLevelUp</span><span class="token punctuation">(</span>int32 NewLevel<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> int32 CurrentLevel <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    int32 PreviousLevel <span class="token operator">=</span> CurrentLevel<span class="token punctuation">;</span>
+    CurrentLevel <span class="token operator">=</span> NewLevel<span class="token punctuation">;</span>
+
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Player leveled up from %d to %d"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> PreviousLevel<span class="token punctuation">,</span> NewLevel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    OnPlayerLevelUp<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span>NewLevel<span class="token punctuation">,</span> PreviousLevel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 处理函数实现</span>
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">HandleGameStarted</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Handling game start event"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 初始化游戏逻辑</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">HandleHealthChanged</span><span class="token punctuation">(</span><span class="token keyword">float</span> NewHealth<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Handling health change: %.1f"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>NewHealth <span class="token operator">&lt;=</span> <span class="token number">0.0f</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Error<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Player died!"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>NewHealth <span class="token operator">&lt;</span> <span class="token number">30.0f</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Low health warning"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token class-name">AGameEventManager</span><span class="token double-colon punctuation">::</span><span class="token function">HandleLevelUp</span><span class="token punctuation">(</span>int32 NewLevel<span class="token punctuation">,</span> int32 PreviousLevel<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Handling level up: %d -&gt; %d"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> PreviousLevel<span class="token punctuation">,</span> NewLevel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 解锁新能力、更新UI等</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>NewLevel <span class="token operator">&gt;=</span> <span class="token number">10</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">UE_LOG</span><span class="token punctuation">(</span>LogTemp<span class="token punctuation">,</span> Warning<span class="token punctuation">,</span> <span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"Reached milestone level!"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 class="atx" id="6-在蓝图中使用委托">6. 在蓝图中使用委托</h3>
+<h4 class="atx" id="绑定蓝图事件：">绑定蓝图事件：</h4>
+<ol>
+<li>在蓝图中获取委托持有者的引用</li>
+<li>右键点击 → "Assign On [EventName]"</li>
+<li>连接到自定义事件节点</li>
+</ol>
+<h4 class="atx" id="触发蓝图事件：">触发蓝图事件：</h4>
+<ol>
+<li>调用会广播委托的C++函数</li>
+<li>或者直接在蓝图中调用广播函数</li>
+</ol>
+<h3 class="atx" id="7-委托的最佳实践">7. 委托的最佳实践</h3>
+<h4 class="atx" id="71-内存管理">7.1 内存管理</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 在析构函数中取消绑定</span>
+<span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">AMyActor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    OnHealthChanged<span class="token punctuation">.</span><span class="token function">RemoveAll</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 或者使用弱引用</span>
+TWeakObjectPtr<span class="token operator">&lt;</span>UObject<span class="token operator">&gt;</span> WeakThis <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+OnEvent<span class="token punctuation">.</span><span class="token function">AddLambda</span><span class="token punctuation">(</span><span class="token punctuation">[</span>WeakThis<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>UObject<span class="token operator">*</span> Object <span class="token operator">=</span> WeakThis<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 安全地使用对象</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="72-性能考虑">7.2 性能考虑</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 检查是否有绑定再广播</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>OnHealthChanged<span class="token punctuation">.</span><span class="token function">IsBound</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    OnHealthChanged<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span>NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 或者使用 ExecuteIfBound（单播）</span>
+OnItemPickedUp<span class="token punctuation">.</span><span class="token function">ExecuteIfBound</span><span class="token punctuation">(</span>ItemName<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 class="atx" id="73-委托命名约定">7.3 委托命名约定</h4>
+<pre><code class="fenced-code-block language-cpp"><span class="token comment">// 好的命名</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnHealthChanged<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> NewHealth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE</span><span class="token punctuation">(</span>FOnGamePaused<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 不好的命名</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FDelegate1<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token punctuation">,</span> Param1<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 class="atx" id="8-常见问题解决">8. 常见问题解决</h3>
+<h4 class="atx" id="81-委托未触发">8.1 委托未触发</h4>
+<ul>
+<li>检查是否已经绑定</li>
+<li>检查绑定时机是否正确</li>
+<li>检查广播是否被调用</li>
+</ul>
+<h4 class="atx" id="82-对象已销毁导致的崩溃">8.2 对象已销毁导致的崩溃</h4>
+<ul>
+<li>使用弱引用或智能指针</li>
+<li>在析构函数中取消绑定</li>
+<li>使用 <code>IsBound()</code> 检查</li>
+</ul>
+<h4 class="atx" id="83-蓝图绑定失败">8.3 蓝图绑定失败</h4>
+<ul>
+<li>确保委托有 <code>BlueprintAssignable</code> 标记</li>
+<li>确保处理函数是 <code>UFUNCTION()</code></li>
+<li>检查参数类型匹配</li>
+</ul>
+<p><strong>总结：</strong> 委托是虚幻引擎中最重要的通信机制之一，掌握委托可以让你写出更加模块化、可维护的代码。动态多播委托是最常用的类型，因为它既强大又支持蓝图。</p>
+<h2 class="atx" id="监听单一变量的变化">监听单一变量的变化</h2>
+<ol>
+<li>被监听类（包含变量的类）</li>
+</ol>
+<pre><code class="fenced-code-block language-cpp">         <span class="token comment">// 声明委托</span>
+         <span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam</span><span class="token punctuation">(</span>FOnSelectPawnChange<span class="token punctuation">,</span> ACharacter_Pawn<span class="token operator">*</span><span class="token punctuation">,</span> SelectPawn<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p><code>DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam（委托实例，被监听的变量类型，被监听的变量名）</code>
+申明定义</p>
+<pre><code class="fenced-code-block language-cpp">         <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">)</span>
+         ACharacter_Pawn<span class="token operator">*</span> SelectPawn<span class="token punctuation">;</span>
+
+         <span class="token comment">// 委托实例（其他类可以绑定到这个委托）</span>
+         <span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"Player"</span><span class="token punctuation">)</span>
+         FOnSelectPawnChange OnSelectPawnChange<span class="token punctuation">;</span></code></pre>
+<pre><code class="fenced-code-block language-cpp">         <span class="token comment">// 触发委托，所有监听者都会收到通知</span>
+         OnSelectPawnChange<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span>SelectPawn<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<ol>
+<li>监听类</li>
+</ol>
+<pre><code class="fenced-code-block language-cpp">         <span class="token comment">// 绑定到SelectPawn变化的函数</span>
+         <span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+         <span class="token keyword">void</span> <span class="token function">OnSelectPawnChanged</span><span class="token punctuation">(</span>ACharacter_Pawn<span class="token operator">*</span> NewSelectPawn<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="fenced-code-block language-cpp">         <span class="token comment">//绑定SelectPawn变化</span>
+         Player<span class="token operator">-&gt;</span>OnSelectPawnChange<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AFloorBase<span class="token double-colon punctuation">::</span>OnSelectPawnChanged<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+</article>
+</body>
+</html>
