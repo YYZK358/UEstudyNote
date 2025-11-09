@@ -128,7 +128,7 @@
 
 ## （重要）获取玩家控制器
 
-```
+```cpp
 APlayerController* PlayerController = Cast<APlayerController>(GetController());
 if (PlayerController)
 {
@@ -141,11 +141,11 @@ if (PlayerController)
 
 ## 玩家速度设置
 
-```
+```cpp
 #include "GameFramework/CharacterMovementComponent.h"
 ```
 
-```
+```cpp
 GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 ```
 
@@ -153,21 +153,21 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 1.增强输入头文件
 
-```
+```cpp
          #include "EnhancedInputSubsystems.h"
          #include "EnhancedInputComponent.h"
 ```
 
 2.声明映射
 
-```
+```cpp
          UPROPERTY(EditAnywhere, BlueprintReadWrite)
          TObjectPtr<UInputMappingContext> DefaultMapping;
 ```
 
 3.声明输入组件
 
-```
+```cpp
          UPROPERTY(EditAnywhere, BlueprintReadWrite)
          TObjectPtr<UInputAction> MoveAction;
 
@@ -180,7 +180,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 4.配置映射（开始时配置）
 
-```
+```cpp
          void AMyPlayer::BeginPlay()
          {
                  Super::BeginPlay();
@@ -196,7 +196,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 5.绑定函数
 
-```
+```cpp
          void AMyPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
          {
                  Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -213,7 +213,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 1.声明弹簧臂组件和相机组件
 
-```
+```cpp
          #include "Camera/CameraComponent.h"    // 包含 UCameraComponent
          #include "GameFramework/SpringArmComponent.h"  // 包含 USpringArmComponent
 
@@ -226,7 +226,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 2.在构造函数里设置
 
-```
+```cpp
          SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
          SpringArm->SetupAttachment(RootComponent);
          Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -249,13 +249,13 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 1.声明运动函数（参数固定格式）
 
-```
+```cpp
          void Move(const FInputActionValue& Value);
 ```
 
 2.逻辑实现
 
-```
+```cpp
          void AMyPlayer::Move(const FInputActionValue& Value)
          {
                  FVector2D MoveVector = Value.Get<FVector2D>();
@@ -275,14 +275,14 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 1.在.h中声明
 
-```
+```cpp
          //重写父类的Jump虚函数
          virtual void Jump() override;
 ```
 
 2.在.cpp中定义
 
-```
+```cpp
         //跳函数
         void AMyCharacter::Jump()
         {
@@ -290,11 +290,11 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
         }
 ```
 
-```
+```cpp
          #include "GameFramework/CharacterMovementComponent.h" // 必须包含
 ```
 
-```
+```cpp
          // 在角色构造函数中设置
          AMyCharacter::AMyCharacter()
          {
@@ -309,7 +309,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 
 ## 角色滑翔
 
-```
+```cpp
 // 在角色类中设置滑翔参数
 void AMyCharacter::SetupGliding()
 {
@@ -323,7 +323,7 @@ void AMyCharacter::SetupGliding()
 
 C++ 版本:
 
-```
+```cpp
 if (GetCharacterMovement()->IsMovingOnGround())
 {
     // 玩家在地面上
@@ -337,7 +337,7 @@ Blueprint版本:
 
 1.声明转向函数（参数固定格式）
 
-```
+```cpp
          void Look(const FInputActionValue& Value);
 ```
 
@@ -351,13 +351,17 @@ Blueprint版本:
 
 2.逻辑实现
 
-```
+```cpp
          void AMyPlayer::Look(const FInputActionValue& Value)
          {
                  FVector2D LookVector = Value.Get<FVector2D>();
                  if (Controller) {
                          AddControllerYawInput(LookVector.X);
                          AddControllerPitchInput(LookVector.Y);
+                          // 可选：限制抬头低头角度
+                          FRotator CurrentRotation = GetControlRotation();
+                         CurrentRotation.Pitch = FMath::Clamp(CurrentRotation.Pitch, -80.0f, 80.0f);
+                          Controller->SetControlRotation(CurrentRotation);
                  }
          }
 ```
@@ -453,7 +457,7 @@ Blueprint版本:
              UInputAction* SpringArmAction;
 ```
 
-```
+```cpp
              //不要让玩家随着控制器旋转
              bUseControllerRotationPitch = false;
              bUseControllerRotationRoll = false;
@@ -484,7 +488,7 @@ Blueprint版本:
             }
 ```
 
-```
+```cpp
              Input->BindAction(SpringArmAction, ETriggerEvent::Completed, this, &AMainPlayer::SetSpringArm);
 ```
 
@@ -492,7 +496,7 @@ Blueprint版本:
 
 在屏幕上打印字符
 
-```
+```cpp
 GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, FString::Printf(TEXT("Jump test")));
 ```
 
@@ -510,12 +514,12 @@ DrawDebugLine(GetWorld(), Start, End, FColor::Blue);
 
 输出物体坐标信息
 
-```
-             // 格式化坐标信息
-                     FString LocationString = FString::Printf(TEXT("Location: X=%.2f, Y=%.2f, Z=%.2f"), ActorLocation.X, ActorLocation.Y, ActorLocation.Z);
+```cpp
+// 格式化坐标信息
+FString LocationString = FString::Printf(TEXT("Location: X=%.2f, Y=%.2f, Z=%.2f"), ActorLocation.X, ActorLocation.Y, ActorLocation.Z);
 
-             // 在屏幕上显示坐标信息
-                     GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, LocationString);
+// 在屏幕上显示坐标信息
+GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, LocationString);
 ```
 
 # Bug合集
@@ -609,11 +613,11 @@ bool AEnemy::LineTraceActor(AActor* TargetActor)
 
 ## Enemy能否看见玩家（函数）
 
-```
+```cpp
     TargetCharacter = UGameplayStatics::GetPlayerCharacter(this, 0)
 ```
 
-```
+```cpp
 bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) const
 {
         if (TargetActor == nullptr)
@@ -709,19 +713,19 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 
 ## SpawnActor
 
-```
+```cpp
 TSubclassOf<ABallProjecttile> BallProjecttileClass;
 //目标物体，在头文件中声明
 ```
 
-```
+```cpp
 GetWorld()->SpawnActor<ABallProjecttile>(BallProjecttileClass, SpwnLocation, GetActorRotation());
 //（目标物体，位置，朝向）
 ```
 
 ## SpawnActorDeferred
 
-```
+```cpp
 FTransform SpawnTransform(GetActorRotation(), SpwnLocation);
 ABallProjecttile* Projectile(GetWorld()->SpawnActorDeferred<ABallProjecttile>(BallProjecttileClass, SpawnTransform));
 
@@ -753,14 +757,14 @@ Projectile->FinishSpawning(SpawnTransform);
 
 使用实列
 
-```
+```cpp
          FTimerHandle FireTimerHandle;
 
          float FireInterval = 3.f;
          float FireDelay = 0.5f;
 ```
 
-```
+```cpp
          if (CanSeePlayer)
          {
                  GetWorldTimerManager().SetTimer(FireTimerHandle, this, &AEnemy::Fire, FireInterval, true, FireDelay);
@@ -1542,3 +1546,5 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
          //绑定SelectPawn变化
          Player->OnSelectPawnChange.AddDynamic(this, &AFloorBase::OnSelectPawnChanged);
 ```
+
+# 
