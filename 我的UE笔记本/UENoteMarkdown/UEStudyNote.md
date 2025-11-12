@@ -1547,4 +1547,16 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
          Player->OnSelectPawnChange.AddDynamic(this, &AFloorBase::OnSelectPawnChanged);
 ```
 
-# 
+# 镜子
+## 场景捕获+材质渲染
+![alt text](image-15.png)
+**1.添加捕获组件2D（摄像头）**
+**2.添加一个平面**
+**3.创建一个材质球**
+**4.创建纹理**
+![alt text](image-16.png)
+``画布渲染目标,把摄像头捕获的场景渲染``
+**5.将纹理连接到材质球**
+![alt text](image-17.png)
+**6.在摄像机组件中选择目标纹理（画布渲染纹理）**
+**7.让平面使用材质**
