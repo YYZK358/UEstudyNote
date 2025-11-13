@@ -1548,7 +1548,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 ```
 
 # 镜子
-## 场景捕获+材质渲染
+## 场景捕获+材质渲染（一个场景中不可出现多个镜子）
 ![alt text](image-15.png)
 **1.添加捕获组件2D（摄像头）**
 **2.添加一个平面**
@@ -1560,3 +1560,25 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 ![alt text](image-17.png)
 **6.在摄像机组件中选择目标纹理（画布渲染纹理）**
 **7.让平面使用材质**
+
+## 镜子蓝图(可在场景中大量摆放)
+### 在上述过程基础上把纹理节点提升为参数
+![alt text](image-18.png)
+**右键点击，提升为参数**
+### 创建2D纹理画布
+**将其设置为相机组件的目标纹理**
+![alt text](image-19.png)
+*获取镜子（平面网格体）的材质*
+***一定要有基础材质，以此为基础创建每个镜子的材质***
+![alt text](image-20.png)
+### 将这个材质的纹理修改为相机绘制的纹理 
+*Parameter Name是材质中被提升为参数的纹理，的参数名*
+![alt text](image-21.png)
+### 优化
+![alt text](image-22.png)
+***在超出一定距离的情况下停止相机的活动***
+# 性能优化
+## 距离剔除
+![alt text](image-23.png)
+在场景中添加，把需要剔除的物体框起来，就可以设置需要剔除的物体size以及距离（可以设置多组）
+## 流试关卡加载
