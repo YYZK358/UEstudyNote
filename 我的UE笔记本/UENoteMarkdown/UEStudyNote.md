@@ -1558,6 +1558,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 ``画布渲染目标,把摄像头捕获的场景渲染``
 **5.将纹理连接到材质球**
 ![alt text](image-17.png)
+*5.1*将纹理镜像翻转
+![alt text](image-24.png)
 **6.在摄像机组件中选择目标纹理（画布渲染纹理）**
 **7.让平面使用材质**
 
@@ -1582,3 +1584,18 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 ![alt text](image-23.png)
 在场景中添加，把需要剔除的物体框起来，就可以设置需要剔除的物体size以及距离（可以设置多组）
 ## 流试关卡加载
+
+# Material(材质节点)
+## 纹理UV控制
+以此节点为基础控制纹理的UV
+![alt text](image-25.png)
+使用break节点，分离UV（RG）
+![alt text](image-26.png)
+UV分别对应纹理XY（横轴，纵轴）坐标
+**使用乘法可以进行纹理的缩放**
+*示例为对X轴进行缩放（缩放-1倍，图像镜像）*
+![alt text](image-27.png)
+**使用加法可以对纹理进行平移**
+**最后要对UV进行合并，连接到纹理的UVS节点**
+*使用Append合并UV*
+![alt text](image-28.png)
