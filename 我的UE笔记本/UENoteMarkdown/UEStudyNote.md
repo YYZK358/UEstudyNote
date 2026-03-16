@@ -714,6 +714,11 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 ## SpawnActor
 
 ```cpp
+SpawnActor<放置actor类型>(目标物体 ,目标位置,目标旋转):
+//返回值类型AActor*
+```
+
+```cpp
 TSubclassOf<ABallProjecttile> BallProjecttileClass;
 //目标物体，在头文件中声明
 ```
@@ -1599,3 +1604,21 @@ UV分别对应纹理XY（横轴，纵轴）坐标
 **最后要对UV进行合并，连接到纹理的UVS节点**
 *使用Append合并UV*
 ![alt text](image-28.png)
+# 获取物体尺寸数据
+```cpp
+AActor* MyActor = ...; // 获取你要查询的Actor
+
+FVector Origin;
+FVector BoxExtent;
+MyActor->GetActorBounds(false, Origin, BoxExtent);
+
+// BoxExtent 是"半长"（从中心点到各个面的距离）
+// 物体的完整宽度（假设是X轴方向）：
+float Width = BoxExtent.X * 2;
+// 物体的完整深度（Y轴）：
+float Depth = BoxExtent.Y * 2;
+// 物体的完整高度（Z轴）：
+float Height = BoxExtent.Z * 2;
+
+UE_LOG(LogTemp, Log, TEXT("物体尺寸 - 宽: %f, 深: %f, 高: %f"), Width, Depth, Height);
+```
