@@ -793,7 +793,7 @@ Projectile->FinishSpawning(SpawnTransform);
 
 ``注意事项： 需要获取玩家控制器，在玩家控制器中实现部分操作！！！``
 
-```
+```cpp
          void AMyCharacter::BeginPlay()
          {
              Super::BeginPlay();
@@ -810,7 +810,7 @@ Projectile->FinishSpawning(SpawnTransform);
         }
 ```
 
-```
+```cpp
          void AMyCharacter::HandleLeftMouseClick()
          {
              APlayerController* PlayerController = Cast<APlayerController>(GetController());
@@ -1622,3 +1622,122 @@ float Height = BoxExtent.Z * 2;
 
 UE_LOG(LogTemp, Log, TEXT("物体尺寸 - 宽: %f, 深: %f, 高: %f"), Width, Depth, Height);
 ```
+
+# Steam 成就系统
+## 配置 DefaultEngine.ini 文件
+**文件路径:** 项目根路径\Config\DefaultEngine.ini
+1.打开文件搜索 *engine.engine* (如果没有，直接跳到步骤3)
+```
+[/Script/Engine.Engine]
++ActiveGameNameRedirects=(OldGameName="TP_Blank",NewGameName="/Script/EndlessMaze")
++ActiveGameNameRedirects=(OldGameName="/Script/TP_Blank",NewGameName="/Script/EndlessMaze")
+
+bUseFixedFrameRate=True
+FixedFrameRate=60.000000
+
+[/Script/AndroidFileServerEditor.AndroidFileServerRuntimeSettings]
+bEnablePlugin=True
+bAllowNetworkConnection=True
+SecurityToken=173058E04935F671ECFAF2937C232CFF
+bIncludeInShipping=False
+bAllowExternalStartInShipping=False
+bCompileAFSProject=False
+bUseCompression=False
+bLogFiles=False
+bReportStats=False
+ConnectionType=USBOnly
+bUseManualIPAddress=False
+ManualIPAddress=
+
+```
+2.添加以下代码
+```
+
+!NetDriverDefinitions=ClearArray
+; Uncomment the next line if you are using the Null Subsystem
+;-NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="/Script/OnlineSubsystemUtils.IpNetDriver",DriverClassNameFallback="/Script/OnlineSubsystemUtils.IpNetDriver")
+; Uncomment the next line if you are using the Steam Subsystem
++NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="OnlineSubsystemSteam.SteamNetDriver",DriverClassNameFallback="OnlineSubsystemUtils.IpNetDriver")
+ 
+
+```
+***添加后***
+```
+[/Script/Engine.Engine]
++ActiveGameNameRedirects=(OldGameName="TP_Blank",NewGameName="/Script/EndlessMaze")
++ActiveGameNameRedirects=(OldGameName="/Script/TP_Blank",NewGameName="/Script/EndlessMaze")
+
+ 
+!NetDriverDefinitions=ClearArray
+; Uncomment the next line if you are using the Null Subsystem
+;-NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="/Script/OnlineSubsystemUtils.IpNetDriver",DriverClassNameFallback="/Script/OnlineSubsystemUtils.IpNetDriver")
+; Uncomment the next line if you are using the Steam Subsystem
++NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="OnlineSubsystemSteam.SteamNetDriver",DriverClassNameFallback="OnlineSubsystemUtils.IpNetDriver")
+ 
+
+
+bUseFixedFrameRate=True
+FixedFrameRate=60.000000
+
+[/Script/AndroidFileServerEditor.AndroidFileServerRuntimeSettings]
+bEnablePlugin=True
+bAllowNetworkConnection=True
+SecurityToken=173058E04935F671ECFAF2937C232CFF
+bIncludeInShipping=False
+bAllowExternalStartInShipping=False
+bCompileAFSProject=False
+bUseCompression=False
+bLogFiles=False
+bReportStats=False
+ConnectionType=USBOnly
+bUseManualIPAddress=False
+ManualIPAddress=
+
+```
+3.在文件末尾添加
+```
+[OnlineSubsystem]
+PollingIntervalInMs=20  
+; Uncomment the following line to use the Null Subsystem
+;DefaultPlatformService=Null
+; Uncomment the following lines to use the Steam Subsystem
+DefaultPlatformService=Steam  
+VoiceNotificationDelta=0.2
+ 
+[OnlineSubsystemSteam]
+bEnabled=true  
+SteamDevAppId=480  
+SteamAppId=480  
+GameServerQueryPort=27015  
+bRelaunchInSteam=false  
+GameVersion=1.0.0.0  
+bVACEnabled=1  
+bAllowP2PPacketRelay=true  
+P2PConnectionTimeout=90  
+; This is to prevent subsystem from reading other achievements that may be defined in parent .ini
+Achievement_0_Id=""
+
+```
+***在steamworks后台添加成就后修改SteamDevAppId和SteamAppId为自己的游戏***
+480为用于测试的游戏，需要在文件末尾加上成就id
+```
+Achievement_0_Id="ACH_WIN_100_GAMES"
+Achievement_1_Id="ACH_WIN_ONE_GAME"
+```
+## 为项目增加插件
+***添加插件：*** **OnlineSubsystemSteam**
+重启生效
+
+## 激活成就
+### 蓝图
+**！只能在事件图表中使用！**
+*搜索“成就”*
+使用以下三个蓝图函数
+***1.获取成就进度***
+![alt text](image-29.png)
+***2.查找成就是否存在***
+![alt text](image-30.png)
+***3.写入成就***
+![alt text](image-31.png)
+***完整实例***
+![alt text](image-32.png)
