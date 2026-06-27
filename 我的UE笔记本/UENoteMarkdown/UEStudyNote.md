@@ -50,22 +50,23 @@
 
 # 配置输入映射
 
-```
-    1     void AMainPlayer::BeginPlay()
-    2     {
-    3         Super::BeginPlay();
-    4 
-    5         //添加输入映射内容
-    6         if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
-    7         {
-    8             //获取本地玩家子系统
-    9             if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
-   10                 ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-   11             {
-   12                 //添加映射上下文
-   13                 Subsystem->AddMappingContext(InputMapping, 0);
-   14             }
-   15         }
+```cpp
+ void AMainPlayer::BeginPlay()
+     {
+        Super::BeginPlay();
+     
+         //添加输入映射内容
+         if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+         {
+                 //获取本地玩家子系统
+             if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+                    ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+                {
+                    //添加映射上下文
+                    Subsystem->AddMappingContext(InputMapping, 0);
+                }
+         }
+    }
 ```
 
 # 动画
@@ -1741,3 +1742,139 @@ Achievement_1_Id="ACH_WIN_ONE_GAME"
 ![alt text](image-31.png)
 ***完整实例***
 ![alt text](image-32.png)
+
+# GAS
+## 配置
+再插件中添加“Gameplay Abilities”
+在build.cs中添加模块
+*"GameplayAbilities","GameTags","GameplayTasks"*
+
+# PlayerController
+## 控制玩家的基本架构
+```cpp
+// 头文件
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/PlayerController.h"
+
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+
+#include "MyPlayerController.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class GAS_API AMyPlayerController : public APlayerController
+{
+	GENERATED_BODY()
+public:
+	// Sets default values for this character's properties
+	AMyPlayerController();
+	//限制视角俯仰角
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float LookUpMax = -80.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float LookDownMin = 80.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UInputMappingContext> DefaultMapping;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UInputAction> MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UInputAction> LookAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UInputAction> JumpAction;
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupInputComponent() override;
+};
+
+```
+
+```cpp
+// .cpp
+
+
+#include "Gameplay/MyPlayerController.h"
+#include "GameFramework/Character.h"
+
+AMyPlayerController::AMyPlayerController()
+{
+}
+
+void AMyPlayerController::BeginPlay()
+{
+    Super::BeginPlay();
+    // 添加映射上下文
+    if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+    {
+        Subsystem->AddMappingContext(DefaultMapping, 0);
+    }
+}
+
+void AMyPlayerController::Move(const FInputActionValue& Value)
+{
+    // 获取被控制的角色
+    if (ACharacter* ControlledCharacter = Cast<ACharacter>(GetPawn()))
+    {
+        // 获取输入向量 (2D轴)
+        FVector2D MovementVector = Value.Get<FVector2D>();
+        // 调用角色的移动接口
+        
+        ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MovementVector.Y);
+        ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MovementVector.X);
+    }
+}
+
+void AMyPlayerController::Look(const FInputActionValue& Value)
+{
+    FVector2D LookVector = Value.Get<FVector2D>();
+    if (ACharacter* ControlledCharacter = Cast<ACharacter>(GetPawn())) {
+        // 获取当前控制器的旋转
+        FRotator CurrentRotation = GetControlRotation();
+
+        // 计算新旋转
+        float NewPitch = CurrentRotation.Pitch + LookVector.Y;
+        float NewYaw = CurrentRotation.Yaw + LookVector.X;
+
+        // 限制Pitch范围
+        NewPitch = FMath::Clamp(NewPitch, LookUpMax, LookDownMin);
+
+        // 直接设置旋转
+        FRotator NewRotation = FRotator(NewPitch, NewYaw, 0.0f);
+        SetControlRotation(NewRotation);
+        
+    }
+        
+    
+}
+
+void AMyPlayerController::Tick(float DeltaTime)
+{
+}
+
+void AMyPlayerController::SetupInputComponent()
+{
+    Super::SetupInputComponent();
+    if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked< UEnhancedInputComponent>(InputComponent)) {
+        EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Look);
+        EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
+        //EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AMyPlayer::Jump);
+        
+    }
+}
+
+```
