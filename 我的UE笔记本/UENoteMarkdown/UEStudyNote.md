@@ -1749,6 +1749,159 @@ Achievement_1_Id="ACH_WIN_ONE_GAME"
 在build.cs中添加模块
 *"GameplayAbilities","GameTags","GameplayTasks"*
 
+## AbilitySystemComponent
+**GAS系统的核心组件（添加在玩家基类中）**
+```cpp
+UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS")
+TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+```
+**重载父类获取组件函数**
+```cpp
+//.h
+virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+//.cpp
+UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+```
+### 具体使用
+**通过组件使用技能**
+```cpp
+void ACharacterBase::UseAbilityByTag(TArray<FGameplayTagContainer> GameplayTagContainer, int32 TagIndex)
+{
+	if (GameplayTagContainer.IsValidIndex(TagIndex)) {
+		AbilitySystemComponent->TryActivateAbilitiesByTag(GameplayTagContainer[TagIndex]);
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("UseAbilityByTag dont have this TagIndex!"));
+	}
+}
+```
+## GE
+### AttributeSet
+
+### 数据类型
+```cpp
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+FGameplayAttributeData HP;
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+FGameplayAttributeData MaxHP;
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+FGameplayAttributeData MP;
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+FGameplayAttributeData MaxMP;
+```
+### 获取/修改
+**头文件**
+```cpp
+#include "AbilitySystemComponent.h"
+```
+**官方提供的宏**
+```cpp
+//To use this in your game you can define something like this, and then add game-specific functions as necessary:
+  
+ 	#define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
+ 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
+ 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
+ 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
+ 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+  
+ 	ATTRIBUTE_ACCESSORS(UMyHealthSet, Health)
+ 
+ ```
+**处理数据变动**
+```cpp
+//数据变动自动调用
+void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+```
+```cpp
+#include "GameplayEffectExtension.h"
+
+void UBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+	
+    //如果是HP变动
+	if (Data.EvaluatedData.Attribute == GetHPAttribute())
+	{
+		SetHP(FMath::Clamp(GetHP(), 0.0, GetMaxHP()));
+	}
+    /*
+    GetHPAttribute()
+    GetHP
+    GetMaxHP()
+    等函数为使用宏自动拼接产生无需手动定义
+    */
+	
+}
+```
+**完整示例**
+```cpp
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "AttributeSet.h"
+
+#include "AbilitySystemComponent.h"
+
+#include "BaseAttributeSet.generated.h"
+
+/**
+ * 
+ */
+
+#define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
+ 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
+ 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
+ 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
+ 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+
+
+UCLASS()
+class GAS_API UBaseAttributeSet : public UAttributeSet
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+	FGameplayAttributeData HP;
+	ATTRIBUTE_ACCESSORS(UBaseAttributeSet, HP);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+	FGameplayAttributeData MaxHP;
+	ATTRIBUTE_ACCESSORS(UBaseAttributeSet, MaxHP);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+	FGameplayAttributeData MP;
+	ATTRIBUTE_ACCESSORS(UBaseAttributeSet, MP);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
+	FGameplayAttributeData MaxMP;
+	ATTRIBUTE_ACCESSORS(UBaseAttributeSet, MaxMP);
+
+	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+};
+
+
+```
+### 数据表
+**创建数据表** 
+![alt text](image-33.png)
+![alt text](image-34.png)
+**行名格式**
+```
+类名.变量
+```
+### 数值修改
+![alt text](image-35.png)
+![alt text](image-36.png)
+### 调用（角色）
+![alt text](image-37.png)
+### 查看数值（角色）
+![alt text](image-38.png)
 # PlayerController
 ## 控制玩家的基本架构
 ```cpp
