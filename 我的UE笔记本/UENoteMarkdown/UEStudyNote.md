@@ -2117,7 +2117,7 @@ public:
 	UBoxComponent* PortalBox;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	APortalActor* OtherPortal;
+	TWeakObjectPtr<APortalActor> OtherPortal;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	USceneCaptureComponent2D* SceneCaptureComponent;
@@ -2142,9 +2142,9 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	UTextureRenderTarget2D* Texture;
 
-	TObjectPtr<UMaterialInstanceDynamic> DynamicMaterial;
+	TObjectPtr<UMaterialInstanceDynamic> DynamicMaterial = nullptr;
 
-	TObjectPtr<ACharacter> PlayerCharacter;
+	TObjectPtr<ACharacter> PlayerCharacter = nullptr;
 
 protected:
 	// Called when the game starts or when spawned
@@ -2162,7 +2162,6 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 };
 ```
 
@@ -2227,14 +2226,17 @@ void APortalActor::BeginPlay()
 void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->ActorHasTag("Player") && OtherPortal && bCanMove)
-	{
+	if (!IsValid(this)) return;
+	if (!IsValid(OtherActor)) return;
+	if (!OtherActor->ActorHasTag("Player")) return;
+	if (!OtherPortal.IsValid()) return;
+	if (!bCanMove) return; 
+
 		PlayerCharacter = Cast<ACharacter>(OtherActor);
 		AController* Controller = PlayerCharacter->GetController();
 
+	if (!IsValid(PlayerCharacter)) return;
 		//判断进入传送门的方向
-		if (PlayerCharacter)
-		{
 			FVector PlayerForward = PlayerCharacter->GetActorForwardVector();
 			FVector PortalForward = Arrow->GetForwardVector();
 			float dot = FVector::DotProduct(PlayerForward, PortalForward);
@@ -2242,13 +2244,14 @@ void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 			{
 				return;
 			}
-		}
+
 
 
 		//关闭传送能力
 		OtherPortal->bCanMove = false;
+		bCanMove = false;
 		//传送后的位置
-		FVector Location = OtherPortal->Arrow->GetComponentLocation();
+		FVector Location = OtherPortal->GetActorLocation();
 
 		//本地玩家位置偏移
 		FVector WorldOffset = OtherActor->GetActorLocation() - this->GetActorLocation();
@@ -2261,8 +2264,8 @@ void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		FRotator TargetRotation = OtherPortal->Arrow->GetComponentRotation();
 		Location += TargetRotation.RotateVector(LocalOffset);
 
-		if (Controller)
-		{
+		if (! IsValid(Controller)) return;
+
 			// 旋转映射（保持相对朝向）
 			FQuat LocalQuat = Arrow->GetComponentRotation().Quaternion();
 			FQuat PlayerQuat = Controller->GetControlRotation().Quaternion();
@@ -2280,21 +2283,36 @@ void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 			//FinalRotation.Yaw = -FinalRotation.Yaw;
 			Controller->SetControlRotation(FinalRotation);
 			//UE_LOG(LogTemp, Warning, TEXT("角色控制器获取"));
-		}
+
 		//GetControllwr
 		//OtherActor->SetActorLocationAndRotation(Location, OtherPortal->Arrow->GetComponentRotation());
 
 		UE_LOG(LogTemp, Warning,TEXT("传送 Location:%s"),*Location.ToString());
-		GEngine->AddOnScreenDebugMessage(-1,2,FColor::Red,Location.ToString());
+
+
+		//bug补丁
+		if (FVector::Distance(Location,OtherPortal->GetActorLocation()) > 300)
+		{
+			/*图灵老祖保佑，冯诺依曼老祖保佑，千万不要进入这个if*/
+			/*不是哥们？？？？你到底怎么进来的？？？？？*/
+			FVector Test1_Location = OtherPortal->GetActorLocation();
+			FVector Test2_Location = OtherPortal->Arrow->GetComponentLocation();
+			UE_LOG(LogTemp, Warning,TEXT("传送错误 目标传送门坐标:%s 目标传送门箭头坐标：%s"),*Test1_Location.ToString(),*Test2_Location.ToString());
+			GEngine->AddOnScreenDebugMessage(-1,2,FColor::Red,Location.ToString());
+			/*真的没招了，回去吧！强制传送！*/
+			OtherActor->SetActorLocation(Test1_Location);
+		}
+
+
 		return;
-	}
+
 	UE_LOG(LogTemp, Warning, TEXT("触发传送失败"));
 }
 
 void APortalActor::OverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex)
 {
-	if (OtherActor->ActorHasTag("Player") && OtherPortal)
+	if (OtherActor->ActorHasTag("Player") && OtherPortal.IsValid())
 	{
 		bCanMove = true;
 		UE_LOG(LogTemp, Warning, TEXT("可再次触发传送"));
@@ -2304,7 +2322,7 @@ void APortalActor::OverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Other
 void APortalActor::InitTextrue()
 {
 	//渲染传送门画面
-	if (OtherPortal)
+	if (OtherPortal.IsValid())
 	{
 		USceneCaptureComponent2D* OtherScene = OtherPortal->SceneCaptureComponent;
 		OtherScene->TextureTarget = Texture;
@@ -2317,7 +2335,7 @@ void APortalActor::InitTextrue()
 void APortalActor::UpdateScene()
 {
 	// 安全检查
-	if (!IsValid(PlayerCharacter) || !IsValid(OtherPortal) || !IsValid(SceneCaptureComponent))
+	if (!IsValid(PlayerCharacter) || !OtherPortal.IsValid() || !IsValid(SceneCaptureComponent))
 		return;
 
 	//获取玩家摄像机管理器
@@ -2372,7 +2390,7 @@ void APortalActor::UpdateScene()
 	FVector TraceEnd = TargetLocation;
 	FCollisionQueryParams TraceParams;
 	TraceParams.AddIgnoredActor(this);           // 忽略自身
-	TraceParams.AddIgnoredActor(OtherPortal);    // 忽略另一个传送门
+	TraceParams.AddIgnoredActor(OtherPortal.Get());    // 忽略另一个传送门
 	TraceParams.bTraceComplex = false;           // 使用简单碰撞，性能更好
 
 	FHitResult HitResult;
@@ -2439,8 +2457,9 @@ void APortalActor::Tick(float DeltaTime)
 	}else 
 	{
 		this->SceneCaptureComponent->Activate(false);
-		if (OtherPortal)
+		if (OtherPortal.IsValid())
 		OtherPortal->SceneCaptureComponent->Activate(false);
 	}
 }
+
 ```
