@@ -121,6 +121,8 @@ Input->BindAction(RollAction, ETriggerEvent::Triggered, this, &AMainPlayer::Roll
 
 # 玩家类中的设置(APlayerCharacter)
 
+**[仅适合初学者入门,涉及控制玩家的代码建议写到玩家控制器中]**
+
 ## （重要）获取玩家控制器
 
 ```cpp
@@ -413,7 +415,7 @@ UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 
 ```
 void AMyPlayer::SetSpringArm(const FInputActionValue& Value)
-         {                
+         {  
                  if (SpringArm->TargetArmLength - Value.Get<FVector>().X < SpringArmLenghtMax
                          && SpringArm->TargetArmLength - Value.Get<FVector>().X > SpringArmLenghtMin)
                  {
@@ -1018,7 +1020,7 @@ void ABlockMove::BlockMove()
 Get Owner
 ![alt text](image-14.png)
 
-# UE变量名
+# UE变量类型
 
 ## TArray
 
@@ -1043,7 +1045,7 @@ IntArray.Remove(10); // 按值删除
 IntArray.RemoveAt(0); // 按索引删除
 ```
 
-# 枚举类型
+## 枚举类型
 
 ```cpp
 // 在头文件中定义状态枚举
@@ -2087,7 +2089,6 @@ void AMyPlayerController::SetupInputComponent()
 ## 头文件
 
 ```cpp
-
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
@@ -2163,7 +2164,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 };
- 
 ```
 
 ## 源代码
@@ -2443,8 +2443,4 @@ void APortalActor::Tick(float DeltaTime)
 		OtherPortal->SceneCaptureComponent->Activate(false);
 	}
 }
-
-
-
-
 ```
