@@ -1,10 +1,4 @@
-# UE打包上传&&克隆github
-
-文件过大问题
-
-一般删除 .vs    Intermediate两个文件即可
-
-以下是UE项目中一些可以删除的文件及文件夹：
+# UE项目文件&&克隆github
 
 - .vs文件夹及相关文件：包含虚幻IDE相关配置和临时文件、历史记录等，由VS生成。若要更换编译器则必须删除，删除后可重新生成.
 - Binaries文件夹：存放编译生成的二进制文件，针对不同平台和配置进行发布、运行等。若不需要使用已编译好的二进制文件，可将其删除，再次编译项目时会重新生成.
@@ -28,7 +22,7 @@
 # UE指针（TObject）
 
 ```
-         AMyPlayer*  PlayerCharacter
+AMyPlayer*  PlayerCharacter
 
          TObjectPtr<AMyPlayer> PlayerCharacter;
         //建议使用
@@ -36,25 +30,25 @@
 
 # UPROPERTY标签
 
-    UPROPERTY(BlueprintReadOnly)
-     //蓝图只读
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    //所以地方可编辑，蓝图可读写
-    
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    //所有地方可见，蓝图可读写
-    
-    UFUNCTION(BlueprintCallable)
-    //对函数进行修饰，让其可以被蓝图调用
+UPROPERTY(BlueprintReadOnly)
+//蓝图只读
+
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//所以地方可编辑，蓝图可读写
+
+UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+//所有地方可见，蓝图可读写
+
+UFUNCTION(BlueprintCallable)
+//对函数进行修饰，让其可以被蓝图调用
 
 # 配置输入映射
 
 ```cpp
- void AMainPlayer::BeginPlay()
+void AMainPlayer::BeginPlay()
      {
         Super::BeginPlay();
-     
+   
          //添加输入映射内容
          if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
          {
@@ -76,7 +70,7 @@
 在 头文件中 声明
 
 ```//创建动画蒙太奇函数
-    void AnimMontagePlay(UAnimMontage* MontageToPlay, FName SectionName = "Default", float PlayRate = 1.0f);
+void AnimMontagePlay(UAnimMontage* MontageToPlay, FName SectionName = "Default", float PlayRate = 1.0f);
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Montage", meta=(AllowPrivateAccess="true"))
     UAnimMontage* AttackMontage;
@@ -85,7 +79,7 @@
 在.cpp中实现
 
 ```void
-       {
+{
                UAnimInstance* AnimInstance = Cast<UAnimInstance>(GetMesh()->GetAnimInstance());
                 if (AnimInstance && MontageToPlay)
                {
@@ -101,7 +95,7 @@
 调用
 
 ```
-        Input->BindAction(RollAction, ETriggerEvent::Triggered, this, &AMainPlayer::Roll);
+Input->BindAction(RollAction, ETriggerEvent::Triggered, this, &AMainPlayer::Roll);
 
         void AMainPlayer::Roll(){
                 AnimMontagePlay(AttackMontage, FName("Attack5"));
@@ -155,21 +149,21 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 1.增强输入头文件
 
 ```cpp
-         #include "EnhancedInputSubsystems.h"
+#include "EnhancedInputSubsystems.h"
          #include "EnhancedInputComponent.h"
 ```
 
 2.声明映射
 
 ```cpp
-         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
          TObjectPtr<UInputMappingContext> DefaultMapping;
 ```
 
 3.声明输入组件
 
 ```cpp
-         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
          TObjectPtr<UInputAction> MoveAction;
 
          UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -182,7 +176,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 4.配置映射（开始时配置）
 
 ```cpp
-         void AMyPlayer::BeginPlay()
+void AMyPlayer::BeginPlay()
          {
                  Super::BeginPlay();
                  if (const ULocalPlayer* Player = GEngine && GetWorld() ? GEngine->GetFirstGamePlayer(GetWorld()):nullptr)
@@ -198,7 +192,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 5.绑定函数
 
 ```cpp
-         void AMyPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AMyPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
          {
                  Super::SetupPlayerInputComponent(PlayerInputComponent);
                  if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked< UEnhancedInputComponent>(PlayerInputComponent)) {
@@ -215,7 +209,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 1.声明弹簧臂组件和相机组件
 
 ```cpp
-         #include "Camera/CameraComponent.h"    // 包含 UCameraComponent
+#include "Camera/CameraComponent.h"    // 包含 UCameraComponent
          #include "GameFramework/SpringArmComponent.h"  // 包含 USpringArmComponent
 
          UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -228,7 +222,7 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 2.在构造函数里设置
 
 ```cpp
-         SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
          SpringArm->SetupAttachment(RootComponent);
          Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
          Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
@@ -251,13 +245,13 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 1.声明运动函数（参数固定格式）
 
 ```cpp
-         void Move(const FInputActionValue& Value);
+void Move(const FInputActionValue& Value);
 ```
 
 2.逻辑实现
 
 ```cpp
-         void AMyPlayer::Move(const FInputActionValue& Value)
+void AMyPlayer::Move(const FInputActionValue& Value)
          {
                  FVector2D MoveVector = Value.Get<FVector2D>();
                  if (Controller) {
@@ -277,14 +271,14 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 1.在.h中声明
 
 ```cpp
-         //重写父类的Jump虚函数
+//重写父类的Jump虚函数
          virtual void Jump() override;
 ```
 
 2.在.cpp中定义
 
 ```cpp
-        //跳函数
+//跳函数
         void AMyCharacter::Jump()
         {
                 Super::Jump();
@@ -292,11 +286,11 @@ GetCharacterMovement()->MaxWalkSpeed = PlayerMoveSpeed;
 ```
 
 ```cpp
-         #include "GameFramework/CharacterMovementComponent.h" // 必须包含
+#include "GameFramework/CharacterMovementComponent.h" // 必须包含
 ```
 
 ```cpp
-         // 在角色构造函数中设置
+// 在角色构造函数中设置
          AMyCharacter::AMyCharacter()
          {
              // 确保 CharacterMovement 存在
@@ -339,13 +333,13 @@ Blueprint版本:
 1.声明转向函数（参数固定格式）
 
 ```cpp
-         void Look(const FInputActionValue& Value);
+void Look(const FInputActionValue& Value);
 ```
 
 构造函数中实现：
 
 ```
-         //角色根据运动方向旋转
+//角色根据运动方向旋转
          GetCharacterMovement()->bOrientRotationToMovement = true;
          GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 ```
@@ -353,7 +347,7 @@ Blueprint版本:
 2.逻辑实现
 
 ```cpp
-         void AMyPlayer::Look(const FInputActionValue& Value)
+void AMyPlayer::Look(const FInputActionValue& Value)
          {
                  FVector2D LookVector = Value.Get<FVector2D>();
                  if (Controller) {
@@ -370,7 +364,7 @@ Blueprint版本:
 添加进玩家移动函数中
 
 ```
-         //玩家转向设置
+//玩家转向设置
 
          if (InputVector.Y|| InputVector.X) {
                  SetActorRotation(YawRotation);
@@ -380,7 +374,7 @@ Blueprint版本:
 缓慢旋转
 
 ```
-         void AYourCharacter::Tick(float DeltaTime)
+void AYourCharacter::Tick(float DeltaTime)
          {
              Super::Tick(DeltaTime);
 
@@ -403,7 +397,7 @@ Blueprint版本:
 1.声明转向函数（参数固定格式）
 
 ```
-         UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
          USpringArmComponent* SpringArm;
 
          UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -418,8 +412,8 @@ Blueprint版本:
 2.逻辑实现
 
 ```
-         void AMyPlayer::SetSpringArm(const FInputActionValue& Value)
-         {                      
+void AMyPlayer::SetSpringArm(const FInputActionValue& Value)
+         {                
                  if (SpringArm->TargetArmLength - Value.Get<FVector>().X < SpringArmLenghtMax
                          && SpringArm->TargetArmLength - Value.Get<FVector>().X > SpringArmLenghtMin)
                  {
@@ -439,7 +433,7 @@ Blueprint版本:
 ### 弹簧臂设置完整实例
 
 ```
-            //弹簧臂伸缩最大值
+//弹簧臂伸缩最大值
             UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
             float SpringArmLenghtMax = 500;
             //弹簧臂伸缩最小值
@@ -453,13 +447,13 @@ Blueprint版本:
 ```
 
 ```
-             //创建弹簧臂伸缩动作
+//创建弹簧臂伸缩动作
              UPROPERTY(EditAnywhere, Category = "EnhancedInput")
              UInputAction* SpringArmAction;
 ```
 
 ```cpp
-             //不要让玩家随着控制器旋转
+//不要让玩家随着控制器旋转
              bUseControllerRotationPitch = false;
              bUseControllerRotationRoll = false;
              bUseControllerRotationYaw = false;
@@ -490,7 +484,7 @@ Blueprint版本:
 ```
 
 ```cpp
-             Input->BindAction(SpringArmAction, ETriggerEvent::Completed, this, &AMainPlayer::SetSpringArm);
+Input->BindAction(SpringArmAction, ETriggerEvent::Completed, this, &AMainPlayer::SetSpringArm);
 ```
 
 # Debug信息产生
@@ -528,7 +522,7 @@ GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, LocationString);
 ## 头文件位置bug
 
 ```
-      #include "MyPlayer.generated.h"
+#include "MyPlayer.generated.h"
     //必须放在最后面
 ```
 
@@ -615,7 +609,7 @@ bool AEnemy::LineTraceActor(AActor* TargetActor)
 ## Enemy能否看见玩家（函数）
 
 ```cpp
-    TargetCharacter = UGameplayStatics::GetPlayerCharacter(this, 0)
+TargetCharacter = UGameplayStatics::GetPlayerCharacter(this, 0)
 ```
 
 ```cpp
@@ -648,7 +642,7 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 # UBoxComponent碰撞箱
 
 ```
-         //声明碰撞箱组件
+//声明碰撞箱组件
          UPROPERTY(EditAnywhere, BlueprintReadWrite)
          class UBoxComponent* CollisionComponent;
 
@@ -663,7 +657,7 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 碰撞开始和碰撞结束函数的声明
 
 ```
-         UFUNCTION()
+UFUNCTION()
          void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
          UFUNCTION()
@@ -671,7 +665,7 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 ```
 
 ```
-         // 绑定碰撞事件，在BeginPlay中
+// 绑定碰撞事件，在BeginPlay中
          CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBase::OnOverlapBegin);
          CollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AEnemyBase::OnOverlapEnd);
 ```
@@ -681,7 +675,7 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 头文件中声明
 
 ```
-             UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
              TObjectPtr<USphereComponent> SphereComponent;
 
              UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -693,14 +687,14 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 所需头文件
 
 ```
-             #include "Components/SphereComponent.h"
+#include "Components/SphereComponent.h"
              #include "GameFramework/ProjectileMovementComponent.h"
 ```
 
 构造函数中
 
 ```
-             SphereComponent = CreateDefaultSubobject<USphereComponent>("Sphere Collision");
+SphereComponent = CreateDefaultSubobject<USphereComponent>("Sphere Collision");
              SphereComponent->SetSphereRadius(35.f);
              SetRootComponent(SphereComponent);
 
@@ -742,11 +736,11 @@ Projectile->FinishSpawning(SpawnTransform);
 # 计数器
 
 ```
-         FTimerHandle TimerHandle; // 确保 TimerHandle 在类里声明  
+FTimerHandle TimerHandle; // 确保 TimerHandle 在类里声明
 ```
 
 ```
-         GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyActor::ChangeBoolValue, 5.0f, false);
+GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyActor::ChangeBoolValue, 5.0f, false);
 ```
 
 参数解释
@@ -764,14 +758,14 @@ Projectile->FinishSpawning(SpawnTransform);
 使用实列
 
 ```cpp
-         FTimerHandle FireTimerHandle;
+FTimerHandle FireTimerHandle;
 
          float FireInterval = 3.f;
          float FireDelay = 0.5f;
 ```
 
 ```cpp
-         if (CanSeePlayer)
+if (CanSeePlayer)
          {
                  GetWorldTimerManager().SetTimer(FireTimerHandle, this, &AEnemy::Fire, FireInterval, true, FireDelay);
          }
@@ -784,7 +778,7 @@ Projectile->FinishSpawning(SpawnTransform);
 # 射线检测
 
 ```
-        //射线检测
+//射线检测
         GetWorld()->LineTraceSingleByChannel(Hit, Start, End,Channel,QueryParams);
 ```
 
@@ -795,7 +789,7 @@ Projectile->FinishSpawning(SpawnTransform);
 ``注意事项： 需要获取玩家控制器，在玩家控制器中实现部分操作！！！``
 
 ```cpp
-         void AMyCharacter::BeginPlay()
+void AMyCharacter::BeginPlay()
          {
              Super::BeginPlay();
 
@@ -812,7 +806,7 @@ Projectile->FinishSpawning(SpawnTransform);
 ```
 
 ```cpp
-         void AMyCharacter::HandleLeftMouseClick()
+void AMyCharacter::HandleLeftMouseClick()
          {
              APlayerController* PlayerController = Cast<APlayerController>(GetController());
              if (PlayerController)
@@ -1519,7 +1513,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 1. 被监听类（包含变量的类）
 
 ```cpp
-         // 声明委托
+// 声明委托
          DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSelectPawnChange, ACharacter_Pawn*, SelectPawn);
 ```
 
@@ -1527,7 +1521,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 申明定义
 
 ```cpp
-         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
          ACharacter_Pawn* SelectPawn;
 
          // 委托实例（其他类可以绑定到这个委托）
@@ -1536,25 +1530,27 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 ```
 
 ```cpp
-         // 触发委托，所有监听者都会收到通知
+// 触发委托，所有监听者都会收到通知
          OnSelectPawnChange.Broadcast(SelectPawn);
 ```
 
 1. 监听类
 
 ```cpp
-         // 绑定到SelectPawn变化的函数
+// 绑定到SelectPawn变化的函数
          UFUNCTION()
          void OnSelectPawnChanged(ACharacter_Pawn* NewSelectPawn);
 ```
 
 ```cpp
-         //绑定SelectPawn变化
+//绑定SelectPawn变化
          Player->OnSelectPawnChange.AddDynamic(this, &AFloorBase::OnSelectPawnChanged);
 ```
 
 # 镜子
+
 ## 场景捕获+材质渲染（一个场景中不可出现多个镜子）
+
 ![alt text](image-15.png)
 **1.添加捕获组件2D（摄像头）**
 **2.添加一个平面**
@@ -1570,29 +1566,43 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegate1, float, Param1);
 **7.让平面使用材质**
 
 ## 镜子蓝图(可在场景中大量摆放)
+
 ### 在上述过程基础上把纹理节点提升为参数
+
 ![alt text](image-18.png)
 **右键点击，提升为参数**
+
 ### 创建2D纹理画布
+
 **将其设置为相机组件的目标纹理**
 ![alt text](image-19.png)
 *获取镜子（平面网格体）的材质*
 ***一定要有基础材质，以此为基础创建每个镜子的材质***
 ![alt text](image-20.png)
-### 将这个材质的纹理修改为相机绘制的纹理 
+
+### 将这个材质的纹理修改为相机绘制的纹理
+
 *Parameter Name是材质中被提升为参数的纹理，的参数名*
 ![alt text](image-21.png)
+
 ### 优化
+
 ![alt text](image-22.png)
 ***在超出一定距离的情况下停止相机的活动***
+
 # 性能优化
+
 ## 距离剔除
+
 ![alt text](image-23.png)
 在场景中添加，把需要剔除的物体框起来，就可以设置需要剔除的物体size以及距离（可以设置多组）
+
 ## 流试关卡加载
 
 # Material(材质节点)
+
 ## 纹理UV控制
+
 以此节点为基础控制纹理的UV
 ![alt text](image-25.png)
 使用break节点，分离UV（RG）
@@ -1605,7 +1615,9 @@ UV分别对应纹理XY（横轴，纵轴）坐标
 **最后要对UV进行合并，连接到纹理的UVS节点**
 *使用Append合并UV*
 ![alt text](image-28.png)
+
 # 获取物体尺寸数据
+
 ```cpp
 AActor* MyActor = ...; // 获取你要查询的Actor
 
@@ -1625,9 +1637,12 @@ UE_LOG(LogTemp, Log, TEXT("物体尺寸 - 宽: %f, 深: %f, 高: %f"), Width, De
 ```
 
 # Steam 成就系统
+
 ## 配置 DefaultEngine.ini 文件
+
 **文件路径:** 项目根路径\Config\DefaultEngine.ini
 1.打开文件搜索 *engine.engine* (如果没有，直接跳到步骤3)
+
 ```
 [/Script/Engine.Engine]
 +ActiveGameNameRedirects=(OldGameName="TP_Blank",NewGameName="/Script/EndlessMaze")
@@ -1649,20 +1664,20 @@ bReportStats=False
 ConnectionType=USBOnly
 bUseManualIPAddress=False
 ManualIPAddress=
-
 ```
+
 2.添加以下代码
-```
 
+```
 !NetDriverDefinitions=ClearArray
 ; Uncomment the next line if you are using the Null Subsystem
 ;-NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="/Script/OnlineSubsystemUtils.IpNetDriver",DriverClassNameFallback="/Script/OnlineSubsystemUtils.IpNetDriver")
 ; Uncomment the next line if you are using the Steam Subsystem
 +NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="OnlineSubsystemSteam.SteamNetDriver",DriverClassNameFallback="OnlineSubsystemUtils.IpNetDriver")
- 
-
 ```
+
 ***添加后***
+
 ```
 [/Script/Engine.Engine]
 +ActiveGameNameRedirects=(OldGameName="TP_Blank",NewGameName="/Script/EndlessMaze")
@@ -1693,9 +1708,10 @@ bReportStats=False
 ConnectionType=USBOnly
 bUseManualIPAddress=False
 ManualIPAddress=
-
 ```
+
 3.在文件末尾添加
+
 ```
 [OnlineSubsystem]
 PollingIntervalInMs=20  
@@ -1717,20 +1733,25 @@ bAllowP2PPacketRelay=true
 P2PConnectionTimeout=90  
 ; This is to prevent subsystem from reading other achievements that may be defined in parent .ini
 Achievement_0_Id=""
-
 ```
+
 ***在steamworks后台添加成就后修改SteamDevAppId和SteamAppId为自己的游戏***
 480为用于测试的游戏，需要在文件末尾加上成就id
+
 ```
 Achievement_0_Id="ACH_WIN_100_GAMES"
 Achievement_1_Id="ACH_WIN_ONE_GAME"
 ```
+
 ## 为项目增加插件
+
 ***添加插件：*** **OnlineSubsystemSteam**
 重启生效
 
 ## 激活成就
+
 ### 蓝图
+
 **！只能在事件图表中使用！**
 *搜索“成就”*
 使用以下三个蓝图函数
@@ -1744,18 +1765,24 @@ Achievement_1_Id="ACH_WIN_ONE_GAME"
 ![alt text](image-32.png)
 
 # GAS
+
 ## 配置
+
 再插件中添加“Gameplay Abilities”
 在build.cs中添加模块
 *"GameplayAbilities","GameTags","GameplayTasks"*
 
 ## AbilitySystemComponent
+
 **GAS系统的核心组件（添加在玩家基类中）**
+
 ```cpp
 UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS")
 TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 ```
+
 **重载父类获取组件函数**
+
 ```cpp
 //.h
 virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -1766,8 +1793,11 @@ UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 ```
+
 ### 具体使用
+
 **通过组件使用技能**
+
 ```cpp
 void ACharacterBase::UseAbilityByTag(TArray<FGameplayTagContainer> GameplayTagContainer, int32 TagIndex)
 {
@@ -1779,10 +1809,13 @@ void ACharacterBase::UseAbilityByTag(TArray<FGameplayTagContainer> GameplayTagCo
 	}
 }
 ```
+
 ## GE
+
 ### AttributeSet
 
 ### 数据类型
+
 ```cpp
 UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
 FGameplayAttributeData HP;
@@ -1793,12 +1826,17 @@ FGameplayAttributeData MP;
 UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BaseAttributeSet")
 FGameplayAttributeData MaxMP;
 ```
+
 ### 获取/修改
+
 **头文件**
+
 ```cpp
 #include "AbilitySystemComponent.h"
 ```
+
 **官方提供的宏**
+
 ```cpp
 //To use this in your game you can define something like this, and then add game-specific functions as necessary:
   
@@ -1809,20 +1847,22 @@ FGameplayAttributeData MaxMP;
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
   
  	ATTRIBUTE_ACCESSORS(UMyHealthSet, Health)
- 
- ```
+```
+
 **处理数据变动**
+
 ```cpp
 //数据变动自动调用
 void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 ```
+
 ```cpp
 #include "GameplayEffectExtension.h"
 
 void UBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
-	
+
     //如果是HP变动
 	if (Data.EvaluatedData.Attribute == GetHPAttribute())
 	{
@@ -1834,10 +1874,12 @@ void UBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
     GetMaxHP()
     等函数为使用宏自动拼接产生无需手动定义
     */
-	
+
 }
 ```
+
 **完整示例**
+
 ```cpp
 // Fill out your copyright notice in the Description page of Project Settings.
 
@@ -1884,26 +1926,36 @@ public:
 
 	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 };
-
-
 ```
+
 ### 数据表
-**创建数据表** 
+
+**创建数据表**
 ![alt text](image-33.png)
 ![alt text](image-34.png)
 **行名格式**
+
 ```
 类名.变量
 ```
+
 ### 数值修改
+
 ![alt text](image-35.png)
 ![alt text](image-36.png)
+
 ### 调用（角色）
+
 ![alt text](image-37.png)
+
 ### 查看数值（角色）
+
 ![alt text](image-38.png)
+
 # PlayerController
+
 ## 控制玩家的基本架构
+
 ```cpp
 // 头文件
 #pragma once
@@ -1954,7 +2006,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupInputComponent() override;
 };
-
 ```
 
 ```cpp
@@ -1986,7 +2037,7 @@ void AMyPlayerController::Move(const FInputActionValue& Value)
         // 获取输入向量 (2D轴)
         FVector2D MovementVector = Value.Get<FVector2D>();
         // 调用角色的移动接口
-        
+  
         ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MovementVector.Y);
         ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MovementVector.X);
     }
@@ -2009,10 +2060,10 @@ void AMyPlayerController::Look(const FInputActionValue& Value)
         // 直接设置旋转
         FRotator NewRotation = FRotator(NewPitch, NewYaw, 0.0f);
         SetControlRotation(NewRotation);
-        
+  
     }
-        
-    
+  
+  
 }
 
 void AMyPlayerController::Tick(float DeltaTime)
@@ -2026,8 +2077,374 @@ void AMyPlayerController::SetupInputComponent()
         EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Look);
         EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
         //EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AMyPlayer::Jump);
-        
+  
     }
 }
+```
+
+# 传送门制作（C++）
+
+## 头文件
+
+```cpp
+
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "PortalActor.generated.h"
+
+class USpringArmComponent;
+class UBoxComponent;
+class APortalActor;
+class UArrowComponent;
+class UTextureRenderTarget2D;
+class UMaterialInstanceDynamic;
+class ACharacter;
+class UCameraComponent;
+UCLASS()
+class TESTPROJECT_API APortalActor : public AActor
+{
+	GENERATED_BODY()
+
+public:
+	// Sets default values for this actor's properties
+	APortalActor();
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UBoxComponent* PortalBox;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	APortalActor* OtherPortal;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	USceneCaptureComponent2D* SceneCaptureComponent;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UStaticMeshComponent* StaticMesh;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UArrowComponent* Arrow;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	bool bCanMove = true;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float TextrueSizeX = 512;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float TextrueSizeY = 512;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float UpdateSceneDistance = 600;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UTextureRenderTarget2D* Texture;
+
+	TObjectPtr<UMaterialInstanceDynamic> DynamicMaterial;
+
+	TObjectPtr<ACharacter> PlayerCharacter;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION(blueprintCallable)
+	void InitTextrue();
+
+	UFUNCTION(blueprintCallable)
+	void UpdateScene();
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+};
+ 
+```
+
+## 源代码
+
+```cpp
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "PortalActor.h"
+
+#include "VectorTypes.h"
+#include "ViewportInteractionTypes.h"
+#include "Camera/CameraComponent.h"
+#include "Components/ArrowComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
+#include "DSP/Delay.h"
+#include "EditorState/EditorState.h"
+#include "Engine/TextureRenderTarget2D.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+// Sets default values
+APortalActor::APortalActor()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	Arrow = CreateDefaultSubobject<UArrowComponent>("Arrow");
+	RootComponent = Arrow;
+
+	PortalBox = CreateDefaultSubobject<UBoxComponent>("BoxComponent");
+	PortalBox->SetupAttachment(RootComponent);
+	//SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
+	//SpringArm->SetupAttachment(RootComponent);
+	SceneCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>("SceneCaptureComponent");
+	SceneCaptureComponent->SetupAttachment(RootComponent);
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
+	StaticMesh->SetupAttachment(RootComponent);
+
+	Texture = CreateDefaultSubobject<UTextureRenderTarget2D>("TextureRenderTarget");
+	Texture->InitAutoFormat(TextrueSizeX,TextrueSizeY);
+
+
+
+}
+
+// Called when the game starts or when spawned
+void APortalActor::BeginPlay()
+{
+	Super::BeginPlay();
+	PortalBox->OnComponentBeginOverlap.AddDynamic(this, &APortalActor::OverlapBegin);
+	PortalBox->OnComponentEndOverlap.AddDynamic(this, &APortalActor::OverlapEnd);
+	PlayerCharacter = Cast<ACharacter>(UGameplayStatics::GetPlayerPawn(this, 0)) ;
+	InitTextrue();
+
+
+}
+
+void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->ActorHasTag("Player") && OtherPortal && bCanMove)
+	{
+		PlayerCharacter = Cast<ACharacter>(OtherActor);
+		AController* Controller = PlayerCharacter->GetController();
+
+		//判断进入传送门的方向
+		if (PlayerCharacter)
+		{
+			FVector PlayerForward = PlayerCharacter->GetActorForwardVector();
+			FVector PortalForward = Arrow->GetForwardVector();
+			float dot = FVector::DotProduct(PlayerForward, PortalForward);
+			if (dot>=0)
+			{
+				return;
+			}
+		}
+
+
+		//关闭传送能力
+		OtherPortal->bCanMove = false;
+		//传送后的位置
+		FVector Location = OtherPortal->Arrow->GetComponentLocation();
+
+		//本地玩家位置偏移
+		FVector WorldOffset = OtherActor->GetActorLocation() - this->GetActorLocation();
+		FRotator LocalRotation = this->Arrow->GetComponentRotation();
+		FVector LocalOffset = LocalRotation.UnrotateVector(WorldOffset);
+
+		//左右翻转
+		LocalOffset.Y *= -1.0f;
+
+		FRotator TargetRotation = OtherPortal->Arrow->GetComponentRotation();
+		Location += TargetRotation.RotateVector(LocalOffset);
+
+		if (Controller)
+		{
+			// 旋转映射（保持相对朝向）
+			FQuat LocalQuat = Arrow->GetComponentRotation().Quaternion();
+			FQuat PlayerQuat = Controller->GetControlRotation().Quaternion();
+			//FQuat PlayerQuat = OtherActor->GetActorRotation().Quaternion();
+			FQuat RelativeQuat = LocalQuat.Inverse() * PlayerQuat;
+			FQuat TargetQuat = OtherPortal->Arrow->GetComponentRotation().Quaternion();
+			//FQuat FinalQuat = TargetQuat * RelativeQuat;
+			FQuat FinalQuat = TargetQuat * RelativeQuat * FRotator(0, 180, 0).Quaternion();
+			FRotator FinalRotation = FinalQuat.Rotator();
+			// 执行传送（位置 + 旋转）
+			OtherActor->SetActorLocation(Location);
+			//OtherActor->SetActorLocationAndRotation(Location, FinalRotation);
+			//设置视角
+			FinalRotation.Pitch = -FinalRotation.Pitch;
+			//FinalRotation.Yaw = -FinalRotation.Yaw;
+			Controller->SetControlRotation(FinalRotation);
+			//UE_LOG(LogTemp, Warning, TEXT("角色控制器获取"));
+		}
+		//GetControllwr
+		//OtherActor->SetActorLocationAndRotation(Location, OtherPortal->Arrow->GetComponentRotation());
+
+		UE_LOG(LogTemp, Warning,TEXT("传送 Location:%s"),*Location.ToString());
+		GEngine->AddOnScreenDebugMessage(-1,2,FColor::Red,Location.ToString());
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("触发传送失败"));
+}
+
+void APortalActor::OverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex)
+{
+	if (OtherActor->ActorHasTag("Player") && OtherPortal)
+	{
+		bCanMove = true;
+		UE_LOG(LogTemp, Warning, TEXT("可再次触发传送"));
+	}
+}
+
+void APortalActor::InitTextrue()
+{
+	//渲染传送门画面
+	if (OtherPortal)
+	{
+		USceneCaptureComponent2D* OtherScene = OtherPortal->SceneCaptureComponent;
+		OtherScene->TextureTarget = Texture;
+		DynamicMaterial = UMaterialInstanceDynamic::Create(StaticMesh->GetMaterial(0),this);
+		DynamicMaterial->SetTextureParameterValue(FName("Portal"),Texture);
+		StaticMesh->SetMaterial(0, DynamicMaterial);
+	}
+}
+
+void APortalActor::UpdateScene()
+{
+	// 安全检查
+	if (!IsValid(PlayerCharacter) || !IsValid(OtherPortal) || !IsValid(SceneCaptureComponent))
+		return;
+
+	//获取玩家摄像机管理器
+	APlayerCameraManager* CamMgr = UGameplayStatics::GetPlayerCameraManager(this, 0);
+	if (!CamMgr)
+		return;  //如果没有摄像机管理器，直接返回（避免空指针）
+
+	//获取玩家视角位置（只取位置，忽略旋转）
+	FVector PlayerViewLocation = CamMgr->GetCameraLocation();
+
+	//计算玩家相对于本传送门箭头的位置偏移（世界坐标系）
+	FVector ThisArrowLocation = Arrow->GetComponentLocation();
+	FVector WorldOffset = PlayerViewLocation - ThisArrowLocation;
+
+	//将世界偏移转换为本传送门局部坐标系（考虑旋转）
+	FRotator ThisRotation = Arrow->GetComponentRotation();
+	FVector LocalOffset = ThisRotation.UnrotateVector(WorldOffset);
+
+	//左右翻转
+	LocalOffset.Y *= -1.0f;
+	//将局部偏移转换到目标传送门的世界坐标系
+	FRotator TargetRotation = OtherPortal->Arrow->GetComponentRotation();
+	FVector TargetWorldOffset = TargetRotation.RotateVector(LocalOffset);
+	TargetWorldOffset.X = -TargetWorldOffset.X;
+	//目标相机位置 = 目标箭头位置 + 转换后的偏移
+	FVector TargetLocation = OtherPortal->Arrow->GetComponentLocation() + TargetWorldOffset;
+
+	//目标相机旋转 = 目标箭头旋转
+	FRotator TargetViewRotation = TargetRotation;  // 保持出口朝向
+
+	// 旋转映射（跟随玩家视角）
+	// 获取玩家视角旋转
+	FRotator PlayerViewRotation = CamMgr->GetCameraRotation();
+
+	// 计算玩家视角相对于入口箭头的旋转差值（四元数）
+	FQuat LocalQuat = Arrow->GetComponentRotation().Quaternion();          // 入口箭头朝向
+	FQuat PlayerQuat = PlayerViewRotation.Quaternion();         // 玩家视角
+	FQuat RelativeQuat = LocalQuat.Inverse() * PlayerQuat;      // 相对旋转
+
+	// 将相对旋转应用到出口箭头朝向上
+	FQuat TargetQuat = OtherPortal->Arrow->GetComponentRotation().Quaternion();
+	FQuat FinalQuat =  TargetQuat * RelativeQuat * FRotator(0, 180, 0).Quaternion();    // 出口朝向 + 相对旋转
+	TargetViewRotation = FinalQuat.Rotator();          // 最终相机旋转*/
+	TargetViewRotation.Pitch = -TargetViewRotation.Pitch;
+
+	/*/沿出口方向偏移一小段距离，防止相机穿透传送门平面
+	FVector Forward = TargetViewRotation.Vector();
+	TargetLocation += Forward * 20.0f;  // 20 单位，可根据传送门厚度调整*/
+
+	//检测目标位置是否穿模
+	FVector TraceStart = OtherPortal->Arrow->GetComponentLocation();
+	FVector TraceEnd = TargetLocation;
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(this);           // 忽略自身
+	TraceParams.AddIgnoredActor(OtherPortal);    // 忽略另一个传送门
+	TraceParams.bTraceComplex = false;           // 使用简单碰撞，性能更好
+
+	FHitResult HitResult;
+	// 使用 Visibility 通道（通常包括墙壁、地面）
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_Visibility, TraceParams))
+	{
+		// 如果射线被阻挡（说明墙壁在目标位置之前），将相机放在撞击点之前 30 单位处
+		TargetLocation = HitResult.Location - TargetRotation.Vector() * 30.0f;
+		//UE_LOG(LogTemp, Warning, TEXT("传送门相机被墙阻挡，位置修正：%s"), *TargetLocation.ToString());
+	}
+
+
+	//应用位置和旋转到另一个传送门的捕获组件
+	OtherPortal->SceneCaptureComponent->SetWorldRotation(TargetViewRotation);
+	OtherPortal->SceneCaptureComponent->SetWorldLocation(TargetLocation);
+
+
+	USceneCaptureComponent2D* OutCapture = OtherPortal->SceneCaptureComponent;
+	//取传送门开口尺寸
+	FVector BoxExtent = OtherPortal->PortalBox->GetScaledBoxExtent();
+	// 假设 Arrow 的 +X 是法线，传送门表面在 YZ 平面
+	float HalfWidth  = BoxExtent.Y;   // 半宽
+	float HalfHeight = BoxExtent.Z;   // 半高
+
+	//相机到传送门平面的垂直距离
+	FVector PortalLoc     = OtherPortal->Arrow->GetComponentLocation();
+	FVector PortalNormal  = OtherPortal->Arrow->GetForwardVector();
+	float Dist = FMath::Abs(FVector::DotProduct(PortalLoc - TargetLocation, PortalNormal));
+	Dist = FMath::Max(Dist, 1.0f);   // 防止除零
+
+	//让纹理宽高比和传送门一致 
+	float TargetAspect = HalfWidth / HalfHeight;
+	int32 TexY = TextrueSizeY;
+	int32 TexX = FMath::RoundToInt(TexY * TargetAspect);
+	if (Texture && (Texture->SizeX != TexX || Texture->SizeY != TexY))
+	{
+		Texture->ResizeTarget(TexX, TexY);
+	}
+
+	// 设置 FOV：让传送门边缘正好落在纹理边缘
+
+	float NewFovRad = 2.0f * FMath::Atan(HalfWidth / Dist);
+	OutCapture->FOVAngle = FMath::RadiansToDegrees(NewFovRad);
+
+
+	//裁剪平面 
+
+	FVector OutForward = OtherPortal->Arrow->GetForwardVector();
+	OutCapture->bEnableClipPlane  = false;
+	OutCapture->ClipPlaneBase     = OtherPortal->Arrow->GetComponentLocation() + OutForward * -300.0f;
+	OutCapture->ClipPlaneNormal   = OutForward;
+
+
+}
+
+// Called every frame
+void APortalActor::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (PlayerCharacter && FVector::Distance(PlayerCharacter->GetActorLocation(), this->GetActorLocation()) < UpdateSceneDistance)
+	{
+	UpdateScene();
+	}else 
+	{
+		this->SceneCaptureComponent->Activate(false);
+		if (OtherPortal)
+		OtherPortal->SceneCaptureComponent->Activate(false);
+	}
+}
+
+
+
 
 ```
