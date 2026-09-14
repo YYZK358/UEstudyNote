@@ -528,6 +528,17 @@ GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, LocationString);
     //必须放在最后面
 ```
 
+## 碰撞检测重叠重复触发
+
+这是 UE 物理系统的一个经典陷阱：【传送门A 和 传送门 B】
+
+1. 玩家从正面进入 Portal B 的碰撞盒，`OverlapBegin` 正常派发。
+2. 你的代码执行 `OtherActor->SetActorLocation(Location)`，把玩家瞬间挪到 Portal A。
+3. **物理系统在处理"玩家离开 Portal B 碰撞盒"这件事时，由于位置已经被瞬间改掉，重叠状态的更新是异步/延迟的**。在下一帧或同一帧的稍后，引擎会重新评估碰撞，结果可能派发一个 **`OverlapBegin`（而不是 `OverlapEnd`）** ——因为内部状态认为"玩家之前不在 B 里，现在在 B 里"，但用的是**已经更新后的玩家位置**。
+4. 于是你收到一个 Self=PortalB、Other=Player(在 A 附近) 的 OverlapBegin。此时：`bCanMove` 已经被你的恢复逻辑（`可再次触发传送`）重新设为 `true
+
+`
+
 # Enemy的自动生成
 
 ![alt text](image-4.png)
@@ -2162,7 +2173,9 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 };
+ 
 ```
 
 ## 源代码
@@ -2226,6 +2239,9 @@ void APortalActor::BeginPlay()
 void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+
+
+
 	if (!IsValid(this)) return;
 	if (!IsValid(OtherActor)) return;
 	if (!OtherActor->ActorHasTag("Player")) return;
@@ -2263,6 +2279,16 @@ void APortalActor::OverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 
 		FRotator TargetRotation = OtherPortal->Arrow->GetComponentRotation();
 		Location += TargetRotation.RotateVector(LocalOffset);
+
+
+	UE_LOG(LogTemp, Warning,
+TEXT("[Portal] Trigger: Self=%s(Arrow=%s) Other=%s WorldOffset=%s |Offset|=%f LocalOffset=%s"),
+*this->GetActorLocation().ToString(),
+*this->Arrow->GetComponentLocation().ToString(),
+*OtherActor->GetActorLocation().ToString(),
+*WorldOffset.ToString(),
+WorldOffset.Size(),
+*LocalOffset.ToString());
 
 		if (! IsValid(Controller)) return;
 
@@ -2314,8 +2340,18 @@ void APortalActor::OverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Other
 {
 	if (OtherActor->ActorHasTag("Player") && OtherPortal.IsValid())
 	{
-		bCanMove = true;
-		UE_LOG(LogTemp, Warning, TEXT("可再次触发传送"));
+		FTimerHandle CooldownHandle;
+                //使用计时器延迟触发，防止碰撞重复触发
+		GetWorld()->GetTimerManager().SetTimer(CooldownHandle, [this]()
+		{
+			bCanMove = true;
+			if (OtherPortal.IsValid())
+			{
+				OtherPortal->bCanMove = true;
+			}
+			UE_LOG(LogTemp, Warning, TEXT("可再次触发传送"));
+		}, 0.3f, false);
+
 	}
 }
 
@@ -2461,5 +2497,9 @@ void APortalActor::Tick(float DeltaTime)
 		OtherPortal->SceneCaptureComponent->Activate(false);
 	}
 }
+
+
+
+
 
 ```
