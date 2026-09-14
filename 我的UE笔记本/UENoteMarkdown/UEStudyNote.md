@@ -1033,6 +1033,66 @@ Get Owner
 
 # UE变量类型
 
+## 组件类型
+
+### UBoxComponent碰撞箱
+
+```
+//声明碰撞箱组件
+         UPROPERTY(EditAnywhere, BlueprintReadWrite)
+         class UBoxComponent* CollisionComponent;
+
+          // 创建碰撞组件
+          CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
+          //将骨骼网格体设为父级，设置插槽位置为”Attack“
+          CollisionComponent->SetupAttachment(GetMesh(), TEXT("Attack"));
+```
+
+**碰撞组件的应用**
+
+碰撞开始和碰撞结束函数的声明
+
+```
+UFUNCTION()
+         void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+         UFUNCTION()
+         void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+```
+
+```
+// 绑定碰撞事件，在BeginPlay中
+         CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBase::OnOverlapBegin);
+         CollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AEnemyBase::OnOverlapEnd);
+```
+
+### 场景捕获相机2D组件
+
+```cpp
+USceneCaptureComponent2D* SceneCaptureComponent;
+```
+
+### 静态网格体组件
+
+```cpp
+
+	UStaticMeshComponent* StaticMesh;
+```
+
+### 箭头组件
+
+```cpp
+UArrowComponent* Arrow;
+```
+
+## TObjectPtr
+``` cpp
+//指针
+TObjectPtr<T> name
+```
+
+
+
 ## TArray
 
 ```cpp
@@ -2175,7 +2235,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 };
- 
 ```
 
 ## 源代码
@@ -2497,9 +2556,4 @@ void APortalActor::Tick(float DeltaTime)
 		OtherPortal->SceneCaptureComponent->Activate(false);
 	}
 }
-
-
-
-
-
 ```
