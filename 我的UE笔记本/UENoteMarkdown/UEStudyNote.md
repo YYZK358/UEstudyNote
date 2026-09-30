@@ -123,7 +123,7 @@ Input->BindAction(RollAction, ETriggerEvent::Triggered, this, &AMainPlayer::Roll
 
 **[仅适合初学者入门,涉及控制玩家的代码建议写到玩家控制器中]**
 
-## （重要）获取玩家控制器
+## 获取玩家控制器
 
 ```cpp
 APlayerController* PlayerController = Cast<APlayerController>(GetController());
