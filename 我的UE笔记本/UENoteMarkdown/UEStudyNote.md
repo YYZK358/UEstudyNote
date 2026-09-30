@@ -2569,10 +2569,14 @@ class CustomThread : public FRunnable
 {
 public:
 	CustomThread(AThreadActor *actor);
+    
+    //需要实现的接口***
 	virtual bool Init() override;
 	virtual uint32 Run() override;
 	virtual void Stop() override;
 	virtual void Exit() override;
+    //***
+
 	AThreadActor* actor;
 };
 ```
@@ -2623,12 +2627,46 @@ void AThreadActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
-    //创建操作类
+    //创建操作任务类
     CustomThread * testThread = new CustomThread(this);
 
-    //使用操作类创建线程
+    //使用操作任务类创建线程
 	FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("RunnableThread"));
 }
+```
+
+
+## 线程池
+### 创建工作线程
+***需要实现接口：IQueuedWork***
+```cpp
+    class MyWorkThread : public IQueuedWork
+{
+	public:
+	~MyWorkThread();
+
+	//需要实现的接口
+	virtual void DoThreadedWork() override;
+	virtual void Abandon()  override;
+    //***
+
+};
+```
+
+```cpp
+//创建线程池
+	FQueuedThreadPool* ThreadPool = FQueuedThreadPool::Allocate();
+	ThreadPool->Create(2);
+	
+    //创建工作线程类
+	MyWorkThread* WorkThread = new MyWorkThread();
+
+	for (int i = 0; i < 1000; i++)
+	{
+        //加入线程池
+        ThreadPool->AddQueuedWork(WorkThread);
+	}
+
 ```
 
 ## 线程相关函数
@@ -2643,4 +2681,12 @@ FPlatformProcess::Sleep(0.2);
 ```cpp
 //使用指定类创建线程
 FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("RunnableThread"));
+```
+### FQueuedThreadPool
+```cpp
+    //创建线程池
+	FQueuedThreadPool* ThreadPool = FQueuedThreadPool::Allocate();
+
+    //创建线程池（数量，尺寸，优先级，名称）
+	ThreadPool->Create(2);
 ```
