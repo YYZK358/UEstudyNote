@@ -655,14 +655,14 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 # UBoxComponent碰撞箱
 
 ```
-//声明碰撞箱组件
-         UPROPERTY(EditAnywhere, BlueprintReadWrite)
-         class UBoxComponent* CollisionComponent;
+  //声明碰撞箱组件
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
+class UBoxComponent* CollisionComponent;
 
-          // 创建碰撞组件
-          CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
-          //将骨骼网格体设为父级，设置插槽位置为”Attack“
-          CollisionComponent->SetupAttachment(GetMesh(), TEXT("Attack"));
+// 创建碰撞组件
+CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
+//将骨骼网格体设为父级，设置插槽位置为”Attack“
+CollisionComponent->SetupAttachment(GetMesh(), TEXT("Attack"));
 ```
 
 **碰撞组件的应用**
@@ -671,16 +671,16 @@ bool AEnemy::CanSeeActor(const AActor* TargetActor, FVector Start, FVector End) 
 
 ```
 UFUNCTION()
-         void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-         UFUNCTION()
-         void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+UFUNCTION()
+void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 ```
 
 ```
 // 绑定碰撞事件，在BeginPlay中
-         CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBase::OnOverlapBegin);
-         CollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AEnemyBase::OnOverlapEnd);
+CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemyBase::OnOverlapBegin);
+CollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AEnemyBase::OnOverlapEnd);
 ```
 
 # 子弹（AActor类）
@@ -689,30 +689,29 @@ UFUNCTION()
 
 ```
 UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-             TObjectPtr<USphereComponent> SphereComponent;
+TObjectPtr<USphereComponent> SphereComponent;
 
-             UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-             TObjectPtr<UProjectileMovementComponent> ProjecttileMovement;
-
-             FORCEINLINE UProjectileMovementComponent* GetProjecttileMovementComponent() const { return ProjecttileMovement; }
+UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+TObjectPtr<UProjectileMovementComponent> ProjecttileMovement;
+FORCEINLINE UProjectileMovementComponent* GetProjecttileMovementComponent() const { return ProjecttileMovement; }
 ```
 
 所需头文件
 
 ```
 #include "Components/SphereComponent.h"
-             #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 ```
 
 构造函数中
 
 ```
 SphereComponent = CreateDefaultSubobject<USphereComponent>("Sphere Collision");
-             SphereComponent->SetSphereRadius(35.f);
-             SetRootComponent(SphereComponent);
+SphereComponent->SetSphereRadius(35.f);
+SetRootComponent(SphereComponent);
 
-             ProjecttileMovement = CreateDefaultSubobject<UProjectileMovementComponent>("Projecttile Movement");
-             ProjecttileMovement->InitialSpeed = 1300.f;
+ProjecttileMovement = CreateDefaultSubobject<UProjectileMovementComponent>("Projecttile Movement");
+ProjecttileMovement->InitialSpeed = 1300.f;
 ```
 
 # Actor生成
@@ -1035,6 +1034,10 @@ Get Owner
 
 ## 组件类型
 
+![alt text](image-6.png)
+
+碰撞开始和碰撞结束函数的声明
+
 ### UBoxComponent碰撞箱
 
 ```
@@ -1053,7 +1056,7 @@ Get Owner
 碰撞开始和碰撞结束函数的声明
 
 ```
-UFUNCTION()
+        UFUNCTION()
          void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
          UFUNCTION()
@@ -1075,8 +1078,7 @@ USceneCaptureComponent2D* SceneCaptureComponent;
 ### 静态网格体组件
 
 ```cpp
-
-	UStaticMeshComponent* StaticMesh;
+UStaticMeshComponent* StaticMesh;
 ```
 
 ### 箭头组件
@@ -1086,12 +1088,11 @@ UArrowComponent* Arrow;
 ```
 
 ## TObjectPtr
-``` cpp
+
+```cpp
 //指针
 TObjectPtr<T> name
 ```
-
-
 
 ## TArray
 
@@ -2557,11 +2558,15 @@ void APortalActor::Tick(float DeltaTime)
 	}
 }
 ```
+
 # 多线程
+
 ## 简单多线程实例
+
 **创建一个简单类用于执行线程内的操作**
 ***需要实现接口：FRunnable***
 *头文件*
+
 ```cpp
 #pragma once
 #include "ThreadActor.h"
@@ -2569,7 +2574,7 @@ class CustomThread : public FRunnable
 {
 public:
 	CustomThread(AThreadActor *actor);
-    
+  
     //需要实现的接口***
 	virtual bool Init() override;
 	virtual uint32 Run() override;
@@ -2580,7 +2585,9 @@ public:
 	AThreadActor* actor;
 };
 ```
+
 *.cpp*
+
 ```cpp
 #include "CustomThread.h"
 
@@ -2618,15 +2625,15 @@ void CustomThread::Exit()
 {
 	GEngine->AddOnScreenDebugMessage(-1,5,FColor::Red,TEXT("CustomThread::Exit()"));
 }
-
 ```
+
 **创建一个简单actor用于执行线程**
 
 ```cpp
 void AThreadActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
     //创建操作任务类
     CustomThread * testThread = new CustomThread(this);
 
@@ -2635,12 +2642,14 @@ void AThreadActor::BeginPlay()
 }
 ```
 
-
 ## 线程池
+
 ### 创建工作线程
+
 ***需要实现接口：IQueuedWork***
+
 ```cpp
-    class MyWorkThread : public IQueuedWork
+class MyWorkThread : public IQueuedWork
 {
 	public:
 	~MyWorkThread();
@@ -2657,7 +2666,7 @@ void AThreadActor::BeginPlay()
 //创建线程池
 	FQueuedThreadPool* ThreadPool = FQueuedThreadPool::Allocate();
 	ThreadPool->Create(2);
-	
+
 	for (int i = 0; i < 1000; i++)
 	{
         //创建工作线程类
@@ -2665,25 +2674,32 @@ void AThreadActor::BeginPlay()
         //加入线程池
         ThreadPool->AddQueuedWork(WorkThread);
 	}
-
 ```
 
 ## 线程相关函数
+
 ### FPlatformProcess::Sleep()
+
 **阻塞当前线程一定的时间**
+
 ```cpp
 //阻塞线程0.2秒
 FPlatformProcess::Sleep(0.2);
 ```
+
 ### FRunnableThread::Create
+
 **创建线程**
+
 ```cpp
 //使用指定类创建线程
 FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("RunnableThread"));
 ```
+
 ### FQueuedThreadPool
+
 ```cpp
-    //创建线程池
+//创建线程池
 	FQueuedThreadPool* ThreadPool = FQueuedThreadPool::Allocate();
 
     //创建线程池（数量，尺寸，优先级，名称）
