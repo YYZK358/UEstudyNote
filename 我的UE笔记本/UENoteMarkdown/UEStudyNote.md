@@ -2658,11 +2658,10 @@ void AThreadActor::BeginPlay()
 	FQueuedThreadPool* ThreadPool = FQueuedThreadPool::Allocate();
 	ThreadPool->Create(2);
 	
-    //创建工作线程类
-	MyWorkThread* WorkThread = new MyWorkThread();
-
 	for (int i = 0; i < 1000; i++)
 	{
+        //创建工作线程类
+	    MyWorkThread* WorkThread = new MyWorkThread();
         //加入线程池
         ThreadPool->AddQueuedWork(WorkThread);
 	}
@@ -2689,4 +2688,8 @@ FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("Runna
 
     //创建线程池（数量，尺寸，优先级，名称）
 	ThreadPool->Create(2);
+
+
+     //加入线程池
+    ThreadPool->AddQueuedWork(WorkThread);
 ```
