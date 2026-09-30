@@ -2557,3 +2557,90 @@ void APortalActor::Tick(float DeltaTime)
 	}
 }
 ```
+# 多线程
+## 简单多线程实例
+**创建一个简单类用于执行线程内的操作**
+***需要实现接口：FRunnable***
+*头文件*
+```cpp
+#pragma once
+#include "ThreadActor.h"
+class CustomThread : public FRunnable
+{
+public:
+	CustomThread(AThreadActor *actor);
+	virtual bool Init() override;
+	virtual uint32 Run() override;
+	virtual void Stop() override;
+	virtual void Exit() override;
+	AThreadActor* actor;
+};
+```
+*.cpp*
+```cpp
+#include "CustomThread.h"
+
+CustomThread::CustomThread(AThreadActor* actor)
+{
+	this->actor = actor;
+}
+
+bool CustomThread::Init()
+{
+	GEngine->AddOnScreenDebugMessage(-1,5,FColor::Red,TEXT("CustomThread::Init()"));
+	if (IsValid(actor))
+	{
+		return true;
+	}
+	return false;
+}
+
+uint32 CustomThread::Run()
+{
+	for (int i=0;i<10;i++)
+	{
+		GEngine->AddOnScreenDebugMessage(-1,5,FColor::Red,TEXT("CustomThread::Run()"));
+		FPlatformProcess::Sleep(0.2);
+	}
+	return 0;
+}
+
+void CustomThread::Stop()
+{
+	GEngine->AddOnScreenDebugMessage(-1,5,FColor::Red,TEXT("CustomThread::Stop()"));
+}
+
+void CustomThread::Exit()
+{
+	GEngine->AddOnScreenDebugMessage(-1,5,FColor::Red,TEXT("CustomThread::Exit()"));
+}
+
+```
+**创建一个简单actor用于执行线程**
+
+```cpp
+void AThreadActor::BeginPlay()
+{
+	Super::BeginPlay();
+	
+    //创建操作类
+    CustomThread * testThread = new CustomThread(this);
+
+    //使用操作类创建线程
+	FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("RunnableThread"));
+}
+```
+
+## 线程相关函数
+### FPlatformProcess::Sleep()
+**阻塞当前线程一定的时间**
+```cpp
+//阻塞线程0.2秒
+FPlatformProcess::Sleep(0.2);
+```
+### FRunnableThread::Create
+**创建线程**
+```cpp
+//使用指定类创建线程
+FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("RunnableThread"));
+```
