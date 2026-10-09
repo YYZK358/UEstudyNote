@@ -308,7 +308,6 @@ struct FMyStruct
 |               | `Atomic`                      | 整体序列化                 |
 
 > **注意**：`UPROPERTY` 和 `UFUNCTION` 的说明符可以组合使用，多个说明符用逗号分隔。例如 `UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats", meta=(ClampMin="0"))`。`meta` 中的键值对用于控制编辑器显示和行为，不参与运行时逻辑。
->
 
 # 配置输入映射
 
@@ -1435,6 +1434,8 @@ UArrowComponent* Arrow;
 * **特性**：当对象被销毁后，该指针会**自动变为无效**（`IsValid()` 返回 false），因此**不会产生悬空指针**。使用前必须用 `IsValid()` 检查。
 * **使用场景**：**缓存**一个可能被销毁的对象，或需要**打破循环引用**时。例如，一个对象持有对另一个临时对象的引用，但又不想影响其销毁。
 * **GC影响**：❌ 不影响。**能否作为 `UPROPERTY`**：✅ 可以，但非必须。
+
+
 
 #### **`TStrongObjectPtr<T>`**
 
@@ -3160,3 +3161,434 @@ FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("Runna
      //加入线程池
     ThreadPool->AddQueuedWork(WorkThread);
 ```
+
+# Lambda表达式
+
+
+Lambda 表达式是 C++11 引入的特性，在 UE 中被广泛使用，尤其是配合 `AsyncTask`、`ParallelFor`、委托、定时器等场景。它本质上是一个**匿名函数对象**，可以在原地定义、捕获外部变量、作为参数传递。
+
+---
+
+## 一、基本语法
+
+```cpp
+[capture](parameters) -> return_type { body }
+```
+
+
+| 部分             | 说明                           | 是否可省略                |
+| ---------------- | ------------------------------ | ------------------------- |
+| `[capture]`      | 捕获列表，决定如何访问外部变量 | ❌ 不能省略（至少写`[]`） |
+| `(parameters)`   | 参数列表                       | 无参数时可省略            |
+| `-> return_type` | 返回类型                       | 可省略，编译器自动推导    |
+| `{ body }`       | 函数体                         | ❌ 不能省略               |
+
+### 最简单的 lambda
+
+```cpp
+auto Add = [](int32 A, int32 B) { return A + B; };
+int32 Result = Add(3, 5);  // 8
+```
+
+### 在 UE 中的典型用法
+
+```cpp
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, []()
+{
+    // 后台线程执行的逻辑
+    UE_LOG(LogTemp, Log, TEXT("Hello from background thread"));
+});
+```
+
+---
+
+## 二、捕获列表（Capture）
+
+捕获列表决定 lambda 如何访问外部作用域的变量。
+
+### 1. 不捕获
+
+```cpp
+[]() { /* 不能访问任何外部变量 */ }
+```
+
+### 2. 按值捕获
+
+```cpp
+int32 Health = 100;
+auto Func = [Health]() { return Health; };  // 拷贝一份 Health
+```
+
+- 外部 `Health` 改变不影响 lambda 内部的副本。
+- 适合小对象、基础类型。
+
+### 3. 按引用捕获
+
+```cpp
+int32 Health = 100;
+auto Func = [&Health]() { Health = 50; };  // 直接操作外部变量
+Func();
+// Health 现在是 50
+```
+
+- **危险**：如果 lambda 的生命周期超过外部变量，会产生悬空引用。
+
+### 4. 隐式捕获
+
+```cpp
+[=]() { /* 按值捕获所有用到的外部变量 */ }
+[&]() { /* 按引用捕获所有用到的外部变量 */ }
+```
+
+- `[=]` 和 `[&]` 可以混用，例如 `[=, &Health]` 表示默认按值，但 `Health` 按引用。
+
+### 5. 捕获 `this` 指针
+
+```cpp
+class AMyActor
+{
+    int32 Health = 100;
+
+    void Setup()
+    {
+        auto Func = [this]() { Health = 50; };  // 可以访问成员变量
+        Func();
+    }
+};
+```
+
+- 在 UE 的 `UObject` 中，`[this]` 捕获裸指针有风险，如果对象被 GC 后 lambda 才执行，会崩溃。
+
+### 6. UE 中的 `this` 安全捕获
+
+```cpp
+// 危险：可能访问已销毁的对象
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this]()
+{
+    DoSomething();  // this 可能已失效
+});
+
+// 安全：用 TWeakObjectPtr
+TWeakObjectPtr<AMyActor> WeakThis(this);
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [WeakThis]()
+{
+    if (WeakThis.IsValid())
+        WeakThis->DoSomething();
+});
+```
+
+---
+
+## 三、UE 中的常见使用场景
+
+### 1. `AsyncTask`：切线程
+
+```cpp
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, Data = MoveTemp(Data)]()
+{
+    // 后台计算
+    ProcessData(Data);
+
+    // 切回游戏线程
+    AsyncTask(ENamedThreads::GameThread, [this]()
+    {
+        UpdateUI();
+    });
+});
+```
+
+**注意**：捕获大数据时用 `MoveTemp` 避免拷贝。
+
+### 2. `ParallelFor`：数据并行
+
+```cpp
+ParallelFor(Array.Num(), [&](int32 Index)
+{
+    Array[Index] = Compute(Array[Index]);
+});
+```
+
+- `[&]` 捕获数组引用，所有线程共享。
+- **注意**：多个线程同时写同一个元素会数据竞争，但写不同索引是安全的。
+
+### 3. 委托绑定
+
+```cpp
+// 绑定 lambda 到委托
+FTimerDelegate Delegate;
+Delegate.BindLambda([this]()
+{
+    DoSomething();
+});
+GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, 1.0f, true);
+```
+
+### 4. `TFunction`：通用可调用对象
+
+```cpp
+TFunction<void(int32)> Callback = [this](int32 Value)
+{
+    UE_LOG(LogTemp, Log, TEXT("Value: %d"), Value);
+};
+
+Callback(42);
+```
+
+### 5. 排序
+
+```cpp
+Items.Sort([](const FItem& A, const FItem& B)
+{
+    return A.Priority > B.Priority;  // 降序
+});
+```
+
+### 6. 查找
+
+```cpp
+FItem* Found = Items.FindByPredicate([](const FItem& Item)
+{
+    return Item.ID == TargetID;
+});
+```
+
+---
+
+## 四、Lambda 的底层实现
+
+Lambda 本质上是一个**编译器生成的匿名类**，捕获的变量成为这个类的成员变量，`operator()` 是它的调用运算符。
+
+```cpp
+int32 X = 10;
+auto Func = [X](int32 Y) { return X + Y; };
+```
+
+大致等价于：
+
+```cpp
+class __Lambda_1
+{
+    int32 X;  // 捕获的变量
+public:
+    __Lambda_1(int32 InX) : X(InX) {}
+    int32 operator()(int32 Y) const { return X + Y; }
+};
+
+__Lambda_1 Func(X);
+```
+
+**理解这一点很重要**：
+
+- 捕获的变量是 lambda 对象的**成员**，所以 lambda 的大小取决于捕获了什么。
+- `[&]` 捕获引用，lambda 内部存的是引用；`[=]` 捕获值，存的是副本。
+- Lambda 的调用就是一次 `operator()` 调用，和普通函数调用开销相当。
+
+---
+
+## 五、Lambda 的性能
+
+
+| 方面     | 说明                                                  |
+| -------- | ----------------------------------------------------- |
+| 调用开销 | 和普通函数调用相当，通常会被内联                      |
+| 拷贝开销 | 捕获的变量越多、越大，拷贝成本越高                    |
+| 堆分配   | Lambda 本身不触发堆分配，但存入`TFunction` 时可能触发 |
+| 内联     | 编译器可以内联 lambda，尤其是传给模板函数时           |
+
+**关键**：
+
+- Lambda 传给 `ParallelFor`、`Sort` 等模板函数时，**会被内联**，几乎零开销。
+- Lambda 存入 `TFunction` 或 `std::function` 时，**可能触发堆分配**，因为类型擦除。
+- Lambda 绑定到 UE 委托（`BindLambda`）时，委托内部会存储 lambda 的副本，也有拷贝开销。
+
+---
+
+## 六、UE 中 Lambda 的注意事项
+
+### 1. `this` 捕获与 GC
+
+```cpp
+// ❌ 危险
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this]()
+{
+    DoSomething();  // this 可能在执行时已被 GC
+});
+
+// ✅ 安全
+TWeakObjectPtr<AMyActor> WeakThis(this);
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [WeakThis]()
+{
+    if (WeakThis.IsValid())
+        WeakThis->DoSomething();
+});
+```
+
+### 2. 引用捕获与生命周期
+
+```cpp
+// ❌ 危险：局部变量在 lambda 执行前已销毁
+TFunction<void()> Func;
+{
+    int32 LocalValue = 10;
+    Func = [&LocalValue]() { UE_LOG(LogTemp, Log, TEXT("%d"), LocalValue); };
+}
+Func();  // 悬空引用
+```
+
+### 3. 跨线程捕获
+
+```cpp
+// ❌ 危险：在后台线程访问 UObject
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this]()
+{
+    GetWorld()->SpawnActor<AActor>(...);  // 崩溃
+});
+
+// ✅ 正确：只捕获纯数据
+TArray<FVector> Positions = ...;
+AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [Positions]()
+{
+    // 只操作纯数据
+});
+```
+
+### 4. 大对象捕获用 `MoveTemp`
+
+```cpp
+// ❌ 拷贝一份大数组
+AsyncTask(..., [this, BigArray]() { ... });
+
+// ✅ 移动，避免拷贝
+AsyncTask(..., [this, BigArray = MoveTemp(BigArray)]() { ... });
+```
+
+### 5. `TFunction` 与 Lambda
+
+```cpp
+// TFunction 可以存储 lambda
+TFunction<void()> Callback = [this]() { DoSomething(); };
+
+// 但如果 lambda 捕获了大对象，TFunction 会拷贝它
+// 可以用 TFunction 的 MoveTemp 构造避免
+```
+
+### 6. Lambda 不能捕获 UE 的 `TArray` 局部变量后跨帧使用
+
+```cpp
+// ❌ 危险：数组在 lambda 执行前已销毁
+TFunction<void()> Func;
+{
+    TArray<int32> LocalArray = {1, 2, 3};
+    Func = [&LocalArray]() { /* 悬空 */ };
+}
+Func();
+```
+
+---
+
+## 七、Lambda vs 其他可调用对象
+
+
+| 方式                | 优点                         | 缺点                                   |
+| ------------------- | ---------------------------- | -------------------------------------- |
+| **Lambda**          | 简洁、就地定义、可捕获上下文 | 类型唯一，不能复用；捕获有生命周期风险 |
+| **函数指针**        | 简单、无捕获开销             | 不能捕获上下文                         |
+| **成员函数指针**    | 类型安全                     | 需要对象实例                           |
+| **`TFunction`**     | 通用、可存储、可传递         | 可能有堆分配和类型擦除开销             |
+| **UE 委托**         | 与蓝图/反射集成              | 动态委托开销大                         |
+| **`std::function`** | 标准 C++                     | UE 中不推荐，用`TFunction` 替代        |
+
+---
+
+## 八、实战示例
+
+### 示例 1：异步计算 + 回传结果
+
+```cpp
+void AMyActor::ComputeAsync()
+{
+    TArray<FVector> Inputs = GatherInputs();
+
+    AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask,
+        [WeakThis = TWeakObjectPtr<AMyActor>(this),
+         Inputs = MoveTemp(Inputs)]()
+    {
+        TArray<float> Results;
+        Results.Reserve(Inputs.Num());
+        for (const FVector& V : Inputs)
+            Results.Add(ComputeHeavy(V));
+
+        // 回游戏线程
+        AsyncTask(ENamedThreads::GameThread,
+            [WeakThis, Results = MoveTemp(Results)]()
+        {
+            if (WeakThis.IsValid())
+                WeakThis->ApplyResults(Results);
+        });
+    });
+}
+```
+
+### 示例 2：并行处理数组
+
+```cpp
+void AMyActor::ProcessItems(TArray<FItem>& Items)
+{
+    ParallelFor(Items.Num(), [&Items](int32 Index)
+    {
+        Items[Index].Value = ExpensiveCompute(Items[Index]);
+    });
+    // 所有线程完成后，回到这里
+    OnProcessingComplete();
+}
+```
+
+### 示例 3：定时器回调
+
+```cpp
+FTimerHandle Handle;
+GetWorld()->GetTimerManager().SetTimer(Handle,
+    FTimerDelegate::CreateLambda([WeakThis = TWeakObjectPtr<AMyActor>(this)]()
+    {
+        if (WeakThis.IsValid())
+            WeakThis->OnTimerTick();
+    }),
+    1.0f, true);
+```
+
+### 示例 4：排序
+
+```cpp
+Items.Sort([](const FItem& A, const FItem& B)
+{
+    if (A.Priority != B.Priority)
+        return A.Priority > B.Priority;
+    return A.Name < B.Name;
+});
+```
+
+---
+
+## 九、总结
+
+
+| 要点         | 说明                                                     |
+| ------------ | -------------------------------------------------------- |
+| **本质**     | 编译器生成的匿名函数对象，捕获变量成为成员               |
+| **捕获**     | `[=]` 按值，`[&]` 按引用，`[this]` 捕获对象指针          |
+| **性能**     | 调用开销低，模板内联无开销；存入`TFunction` 可能有堆分配 |
+| **GC 安全**  | UE 中捕获`this` 用 `TWeakObjectPtr`，避免悬空            |
+| **线程安全** | 后台线程只捕获纯数据，不捕获 UObject 指针                |
+| **生命周期** | 引用捕获要确保外部变量生命周期 ≥ lambda                 |
+| **大对象**   | 用`MoveTemp` 捕获，避免拷贝                              |
+| **常见场景** | `AsyncTask`、`ParallelFor`、委托、排序、查找             |
+
+**核心原则**：
+
+1. **能内联就内联**：传给模板函数（`ParallelFor`、`Sort`）的 lambda 会被内联，性能最好。
+2. **小心 `this`**：UE 中优先用 `TWeakObjectPtr` 捕获。
+3. **小心引用**：跨帧、跨线程的 lambda 不要用 `[&]`。
+4. **大对象用 `MoveTemp`**：避免拷贝开销。
+5. **后台线程只碰纯数据**：不访问 UObject、World、GEngine。
+
+Lambda 是 UE C++ 开发中不可或缺的工具，用好了能大幅简化代码，用错了会导致崩溃和性能问题。理解它的底层实现和捕获规则，是安全使用的关键。
