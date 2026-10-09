@@ -1435,8 +1435,6 @@ UArrowComponent* Arrow;
 * **使用场景**：**缓存**一个可能被销毁的对象，或需要**打破循环引用**时。例如，一个对象持有对另一个临时对象的引用，但又不想影响其销毁。
 * **GC影响**：❌ 不影响。**能否作为 `UPROPERTY`**：✅ 可以，但非必须。
 
-
-
 #### **`TStrongObjectPtr<T>`**
 
 * **说明**：**强引用**，用于在**非 `UObject` 类**（如普通的 C++ 类或结构体）中，安全地持有 `UObject` 并防止其被GC回收。
@@ -3164,7 +3162,6 @@ FRunnableThread* RunnableThread = FRunnableThread::Create(testThread,TEXT("Runna
 
 # Lambda表达式
 
-
 Lambda 表达式是 C++11 引入的特性，在 UE 中被广泛使用，尤其是配合 `AsyncTask`、`ParallelFor`、委托、定时器等场景。它本质上是一个**匿名函数对象**，可以在原地定义、捕获外部变量、作为参数传递。
 
 ---
@@ -3592,3 +3589,335 @@ Items.Sort([](const FItem& A, const FItem& B)
 5. **后台线程只碰纯数据**：不访问 UObject、World、GEngine。
 
 Lambda 是 UE C++ 开发中不可或缺的工具，用好了能大幅简化代码，用错了会导致崩溃和性能问题。理解它的底层实现和捕获规则，是安全使用的关键。
+
+# 引擎默认父类
+
+## Character
+
+### 可重载接口
+
+#### UObject 接口
+
+
+| 函数       | 调用时机                   |
+| ---------- | -------------------------- |
+| `PostLoad` | 对象从磁盘加载完成后调用。 |
+
+#### AActor 接口
+
+
+| 函数                                                       | 调用时机                                                    |
+| ---------------------------------------------------------- | ----------------------------------------------------------- |
+| `BeginPlay`                                                | Actor 进入游戏世界并开始游戏时调用（游戏开始或生成后）。    |
+| `ClearCrossLevelReferences`                                | 清理跨关卡引用时调用（通常发生在 Actor 销毁或关卡切换时）。 |
+| `PreNetReceive`                                            | 在收到网络复制数据之前调用（仅客户端）。                    |
+| `PostNetReceive`                                           | 在收到网络复制数据之后调用（仅客户端）。                    |
+| `GatherCurrentMovement`                                    | 服务器收集当前移动数据以准备网络复制时调用。                |
+| `OnRep_ReplicatedMovement`                                 | `ReplicatedMovement` 属性通过网络复制到客户端后调用。       |
+| `PostNetReceiveLocationAndRotation`                        | 位置和旋转通过网络复制到客户端后调用。                      |
+| `GetSimpleCollisionCylinder`                               | 需要获取简单碰撞圆柱体尺寸时调用（如碰撞查询）。            |
+| `FindComponentByClass(const TSubclassOf<UActorComponent>)` | 需要通过类查找组件时调用。                                  |
+| `TornOff`                                                  | Actor 从网络复制中分离（如所有权丢失或连接断开）时调用。    |
+| `NotifyActorBeginOverlap`                                  | 有其他 Actor 开始与自身重叠时调用（需启用重叠事件）。       |
+| `NotifyActorEndOverlap`                                    | 有其他 Actor 结束与自身重叠时调用（需启用重叠事件）。       |
+
+#### INavAgentInterface 接口
+
+
+| 函数                  | 调用时机                                        |
+| --------------------- | ----------------------------------------------- |
+| `GetNavAgentLocation` | 导航系统查询该 Actor 作为导航代理的位置时调用。 |
+
+#### APawn 接口
+
+
+| 函数                        | 调用时机                                                              |
+| --------------------------- | --------------------------------------------------------------------- |
+| `PostInitializeComponents`  | 所有组件初始化完成后调用（在所有组件 OnRegister 之后）。              |
+| `GetMovementComponent`      | 需要获取 Pawn 的移动组件时调用。                                      |
+| `GetMovementBase`           | 需要获取移动基础（如站在哪个物体上）时调用（`final`，子类不可重写）。 |
+| `GetDefaultHalfHeight`      | 需要获取 Pawn 默认半高时调用（用于碰撞或生成）。                      |
+| `TurnOff`                   | Pawn 被关闭（如控制器断开）时调用。                                   |
+| `Restart`                   | Pawn 需要重新开始（如复活）时调用。                                   |
+| `PawnClientRestart`         | 客户端上重新开始 Pawn 时调用。                                        |
+| `PossessedBy`               | 被控制器占有时调用（服务器端）。                                      |
+| `UnPossessed`               | 被控制器取消占有时调用。                                              |
+| `SetupPlayerInputComponent` | 需要设置玩家输入组件绑定时调用（通常在`PossessedBy` 后）。            |
+| `DisplayDebug`              | 需要显示调试信息时调用（如按`~` 键显示）。                            |
+| `RecalculateBaseEyeHeight`  | 需要重新计算基础眼睛高度时调用（如改变姿态）。                        |
+| `UpdateNavigationRelevance` | 需要更新导航相关性时调用（如启用/禁用导航影响）。                     |
+
+**注意**：网络相关函数（`PreNetReceive`、`PostNetReceive`、`OnRep_ReplicatedMovement` 等）需 Actor 启用复制（`bReplicates = true`）且满足对应移动复制条件才会触发；重叠回调需碰撞组件启用 `GenerateOverlapEvents`。
+
+### 多播委托
+
+
+#### 一、`FMovementModeChangedSignature`
+
+```cpp
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
+    FMovementModeChangedSignature,
+    class ACharacter*, Character,
+    EMovementMode, PrevMovementMode,
+    uint8, PreviousCustomMode);
+```
+
+##### 作用
+
+当角色的**移动模式（MovementMode）发生变化**时广播。
+
+##### 参数
+
+
+| 参数                 | 类型            | 说明                                                             |
+| -------------------- | --------------- | ---------------------------------------------------------------- |
+| `Character`          | `ACharacter*`   | 触发事件的角色自身                                               |
+| `PrevMovementMode`   | `EMovementMode` | 变化前的移动模式                                                 |
+| `PreviousCustomMode` | `uint8`         | 变化前的自定义模式（当`PrevMovementMode == MOVE_Custom` 时有效） |
+
+##### 触发时机
+
+在 `ACharacter::SetMovementMode` 中，移动模式实际发生改变后广播。例如：
+
+- 从 `MOVE_Walking` 变为 `MOVE_Falling`（走下悬崖）
+- 从 `MOVE_Falling` 变为 `MOVE_Walking`（落地）
+- 从 `MOVE_Walking` 变为 `MOVE_Swimming`（进入水中）
+
+##### 绑定方式（C++）
+
+```cpp
+// 在某个类中
+void AMyClass::BindToCharacter(ACharacter* Character)
+{
+    Character->MovementModeChangedDelegate.AddDynamic(
+        this, &AMyClass::OnMovementModeChanged);
+}
+
+UFUNCTION()
+void AMyClass::OnMovementModeChanged(
+    ACharacter* Character,
+    EMovementMode PrevMode,
+    uint8 PrevCustomMode)
+{
+    // 处理逻辑
+}
+```
+
+##### 典型用途
+
+- 播放不同移动模式对应的动画或音效（游泳、飞行、坠落）。
+- 在切换模式时调整角色状态（如禁用/启用技能）。
+- 在蓝图中做移动模式相关的 UI 反馈。
+
+#### 二、`FCharacterMovementUpdatedSignature`
+
+```cpp
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
+    FCharacterMovementUpdatedSignature,
+    float, DeltaSeconds,
+    FVector, OldLocation,
+    FVector, OldVelocity);
+```
+
+##### 作用
+
+在角色的**移动组件每帧更新完成后**广播，用于监听角色的实时运动状态。
+
+##### 参数
+
+
+| 参数           | 类型      | 说明           |
+| -------------- | --------- | -------------- |
+| `DeltaSeconds` | `float`   | 本帧的时间步长 |
+| `OldLocation`  | `FVector` | 更新前的位置   |
+| `OldVelocity`  | `FVector` | 更新前的速度   |
+
+##### 触发时机
+
+在 `UCharacterMovementComponent::PerformMovement` 或 `TickComponent` 中，每帧移动计算完成后广播。**注意**：这是每帧广播，频率很高。
+
+##### 绑定方式（C++）
+
+```cpp
+Character->CharacterMovementUpdated.AddDynamic(
+    this, &AMyClass::OnCharacterMovementUpdated);
+
+UFUNCTION()
+void AMyClass::OnCharacterMovementUpdated(
+    float DeltaSeconds,
+    FVector OldLocation,
+    FVector OldVelocity)
+{
+    // 每帧移动后处理
+}
+```
+
+##### 典型用途
+
+- 记录角色运动轨迹（如回放、幽灵车）。
+- 基于旧位置和新位置做插值、特效。
+- 在移动后立即修正某些状态（如脚步 IK、地面检测）。
+
+##### 注意事项
+
+- **每帧触发，开销敏感**。不要在回调里做重逻辑。
+- 如果只是偶尔需要，用 `Tick` 或 `OnActorTick` 更可控。
+
+#### 三、`FCharacterReachedApexSignature`
+
+```cpp
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCharacterReachedApexSignature);
+```
+
+##### 作用
+
+当角色在**跳跃中到达最高点（Apex）** 时广播，无参数。
+
+##### 触发时机
+
+在 `UCharacterMovementComponent` 中，当角色处于 `MOVE_Falling` 状态且垂直速度从正变为负（即 `Velocity.Z` 从 > 0 变为 ≤ 0）时广播。这是跳跃抛物线的顶点。
+
+##### 绑定方式（C++）
+
+```cpp
+Character->ReachedJumpApex.AddDynamic(this, &AMyClass::OnReachedJumpApex);
+
+UFUNCTION()
+void AMyClass::OnReachedJumpApex()
+{
+    // 到达跳跃最高点
+}
+```
+
+##### 典型用途
+
+- 在跳跃最高点播放特殊动画或特效（如二段跳的提示）。
+- 在最高点调整角色姿态（如翻滚、滑翔）。
+- 实现“顶点悬停”机制（如某些平台游戏）。
+
+##### 注意事项
+
+- 只在角色**处于空中**且**垂直速度变号**时触发一次。
+- 如果角色没有垂直速度变化（如水平飞行），不会触发。
+- 需要在 `UCharacterMovementComponent` 中启用 `bNotifyApex`（默认可能关闭）。
+
+```cpp
+// 启用 Apex 通知
+GetCharacterMovement()->bNotifyApex = true;
+```
+
+#### 四、`FLandedSignature`
+
+```cpp
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+    FLandedSignature,
+    const FHitResult&, Hit);
+```
+
+##### 作用
+
+当角色**从空中落到地面**时广播，携带落地时的命中信息。
+
+##### 参数
+
+
+| 参数  | 类型                | 说明                                                |
+| ----- | ------------------- | --------------------------------------------------- |
+| `Hit` | `const FHitResult&` | 落地时的碰撞检测结果，包含落点、法线、地面 Actor 等 |
+
+##### 触发时机
+
+在 `UCharacterMovementComponent::ProcessLanded` 中，角色从 `MOVE_Falling` 切换到 `MOVE_Walking` 时广播。
+
+##### 绑定方式（C++）
+
+```cpp
+Character->LandedDelegate.AddDynamic(this, &AMyClass::OnLanded);
+
+UFUNCTION()
+void AMyClass::OnLanded(const FHitResult& Hit)
+{
+    // 处理落地
+    AActor* HitActor = Hit.GetActor();
+    FVector ImpactPoint = Hit.ImpactPoint;
+}
+```
+
+##### 典型用途
+
+- 播放落地音效、粒子、镜头震动，强度可根据 `Hit` 的速度或材质决定。
+- 根据落地地面材质（`Hit.PhysMaterial`）播放不同效果（草地、金属、水）。
+- 实现落地伤害（根据下落速度）。
+- 触发落地后的动画（如落地缓冲）。
+
+##### 注意事项
+
+- `Hit` 是 `const FHitResult&`，动态委托参数中引用会被拷贝，所以实际使用时可以直接读取。
+- 落地事件只在**从空中到地面**的过渡时触发一次，不会持续触发。
+- 如果角色一直在地面行走，不会触发 `Landed`。
+
+#### 五、四个委托对比总结
+
+
+| 委托                          | 触发频率     | 参数                       | 典型用途                 |
+| ----------------------------- | ------------ | -------------------------- | ------------------------ |
+| `MovementModeChangedDelegate` | 模式变化时   | 角色、旧模式、旧自定义模式 | 切换动画、状态           |
+| `CharacterMovementUpdated`    | **每帧**     | DeltaTime、旧位置、旧速度  | 轨迹记录、移动后处理     |
+| `ReachedJumpApex`             | 跳跃顶点一次 | 无                         | 顶点特效、二段跳提示     |
+| `LandedDelegate`              | 落地一次     | 命中结果                   | 落地音效、伤害、材质反馈 |
+
+#### 六、在蓝图中使用
+
+这四个委托在蓝图中都有对应的**事件分发器（Event Dispatcher）**，名称分别为：
+
+
+| C++ 委托                      | 蓝图事件                        |
+| ----------------------------- | ------------------------------- |
+| `MovementModeChangedDelegate` | `On Movement Mode Changed`      |
+| `CharacterMovementUpdated`    | `On Character Movement Updated` |
+| `ReachedJumpApex`             | `On Reached Jump Apex`          |
+| `LandedDelegate`              | `On Landed`                     |
+
+在蓝图中，你可以直接从 `Character` 引用拖出引脚，绑定这些事件：
+
+```
+[Character 引用] → Bind Event to On Landed → 自定义事件
+```
+
+绑定后，对应时机触发时，蓝图事件会被调用。
+
+#### 七、绑定与解绑的注意事项
+
+##### 1. 动态委托用 `AddDynamic`
+
+```cpp
+// ✅ 动态委托必须用 AddDynamic（宏会生成反射绑定代码）
+Character->LandedDelegate.AddDynamic(this, &AMyClass::OnLanded);
+
+// ❌ 不能用 AddUObject 或 AddLambda
+```
+
+##### 2. 解绑用 `RemoveDynamic`
+
+```cpp
+Character->LandedDelegate.RemoveDynamic(this, &AMyClass::OnLanded);
+```
+
+##### 3. 对象销毁时自动解绑
+
+动态委托会跟踪 `UObject` 的生命周期，绑定者被销毁时通常会自动解绑，但**建议在 `EndPlay` 中显式解绑**，避免遗留引用。
+
+##### 4. 每帧委托慎用
+
+`CharacterMovementUpdated` 每帧触发。如果绑定了大量对象，或在回调里做重逻辑，会明显影响性能。**能用 `Tick` 的地方不一定非要用它**。
+
+#### 八、总结
+
+这四个委托是 `ACharacter` 暴露给外部的**运动事件钩子**，分别对应：
+
+- **模式变化**：`MovementModeChangedDelegate`
+- **每帧移动更新**：`CharacterMovementUpdated`
+- **跳跃顶点**：`ReachedJumpApex`
+- **落地**：`LandedDelegate`
+
+它们让外部系统（如动画蓝图、UI、特效、音效、技能系统）能**在不修改角色类本身的情况下**，响应角色的运动状态变化，是解耦的典型手段。在蓝图中通过事件分发器绑定，在 C++ 中用 `AddDynamic` 绑定。
