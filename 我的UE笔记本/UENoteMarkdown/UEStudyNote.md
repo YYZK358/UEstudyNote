@@ -19,31 +19,296 @@
 3.进入项目后
 工具-->重新生成C++代码-->打开C++代码-->关闭虚幻编辑器-->在C++代码中重新生成项目
 
-# UE指针（TObject）
+# 反射标签
 
-```
-//原
-AMyPlayer*  PlayerCharacter
-//建议使用
-TObjectPtr<AMyPlayer> PlayerCharacter;
-
-```
-
-# UPROPERTY标签
+## UPROPERTY（属性/变量）
 
 ```cpp
+// ===== 蓝图可访问性 =====
+// 蓝图只读
 UPROPERTY(BlueprintReadOnly)
-//蓝图只读
 
+// 蓝图可读写
+UPROPERTY(BlueprintReadWrite)
+
+// 蓝图只读，且不产生执行线（纯函数节点风格）
+UPROPERTY(BlueprintGetter=GetHealth)
+
+// 蓝图可写，通过 Setter 函数
+UPROPERTY(BlueprintSetter=SetHealth)
+
+
+// ===== 编辑器可见性与可编辑性 =====
+// 所以地方可编辑，蓝图可读写
 UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//所以地方可编辑，蓝图可读写
 
+// 所有地方可见，蓝图可读写
 UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-//所有地方可见，蓝图可读写
 
-UFUNCTION(BlueprintCallable)
-//对函数进行修饰，让其可以被蓝图调用
+// 仅在类默认值中可编辑（蓝图编辑器的 Class Defaults 面板）
+UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+
+// 仅在实例细节面板中可编辑（关卡中的实例）
+UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
+
+// 仅在类默认值中可见
+UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+
+// 仅在实例细节面板中可见
+UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+
+// 不可编辑（任何地方都不可编辑，但可被蓝图访问）
+UPROPERTY(BlueprintReadOnly)
+
+
+// ===== 网络复制 =====
+// 标记该属性需要在网络中复制（服务器 → 客户端）
+UPROPERTY(Replicated)
+
+// 标记该属性需要复制，且复制时调用指定函数（OnRep 回调）
+UPROPERTY(ReplicatedUsing=OnRep_Health)
+
+// 不复制该属性（用于结构体成员或 RPC 参数）
+UPROPERTY(NotReplicated)
+
+
+// ===== 分类与显示 =====
+// 在细节面板中指定分类，支持子分类用 | 分隔
+UPROPERTY(EditAnywhere, Category="Stats|Combat")
+
+// 在细节面板的“高级”折叠区域中显示
+UPROPERTY(EditAnywhere, AdvancedDisplay)
+
+// 自定义显示名称
+UPROPERTY(EditAnywhere, meta=(DisplayName="生命值"))
+
+
+// ===== 序列化与配置 =====
+// 该属性保存到配置文件（.ini）
+UPROPERTY(Config)
+
+// 该属性不序列化（存档时不保存）
+UPROPERTY(Transient)
+
+// 该属性仅在编辑器中使用，不参与运行时序列化
+UPROPERTY(EditAnywhere, meta=(EditCondition="bIsEnabled"))
+
+
+// ===== 对象引用相关 =====
+// 实例化引用（该对象是所属对象的子对象，随所属对象创建/销毁）
+UPROPERTY(Instanced)
+
+// 允许在细节面板中内联创建对象
+UPROPERTY(EditAnywhere, Instanced)
+
+// 软引用（按需加载，不强制加载资产）
+UPROPERTY(EditAnywhere, meta=(AllowedClasses="/Script/Engine.Actor"))
+
+
+// ===== 元数据（常用 meta） =====
+// 数值范围限制
+UPROPERTY(EditAnywhere, meta=(ClampMin="0", ClampMax="100"))
+
+// 滑块范围
+UPROPERTY(EditAnywhere, meta=(UIMin="0", UIMax="100"))
+
+// 仅当另一个布尔变量为 true 时可编辑
+UPROPERTY(EditAnywhere, meta=(EditCondition="bCanEditHealth"))
+
+// 单位显示
+UPROPERTY(EditAnywhere, meta=(Units="cm"))
 ```
+
+## UFUNCTION（函数）
+
+```cpp
+// ===== 蓝图暴露 =====
+// 对函数进行修饰，让其可以被蓝图调用（带执行线）
+UFUNCTION(BlueprintCallable)
+
+// 蓝图可调用，且无副作用（无执行线，自动 const）
+UFUNCTION(BlueprintPure)
+
+// 蓝图可实现（C++ 声明，蓝图实现逻辑，不能有 C++ 函数体）
+UFUNCTION(BlueprintImplementableEvent)
+
+// 蓝图可重写（C++ 提供默认实现，蓝图可覆盖，函数名加 _Implementation）
+UFUNCTION(BlueprintNativeEvent)
+
+// 蓝图纯函数但强制不缓存（每次调用都重新计算）
+UFUNCTION(BlueprintPure=false)
+
+
+// ===== 网络 =====
+// 服务器调用，客户端执行（RPC）
+UFUNCTION(Server, Reliable)
+
+// 客户端调用，服务器执行（RPC）
+UFUNCTION(Client, Reliable)
+
+// 多播：服务器调用，所有客户端执行
+UFUNCTION(NetMulticast, Reliable)
+
+// 不可靠传输（UDP 风格，可能丢包，适合特效等）
+UFUNCTION(Server, Unreliable)
+
+
+// ===== 编辑器 =====
+// 在细节面板中通过按钮调用该函数
+UFUNCTION(CallInEditor)
+
+// 在蓝图编辑器中指定函数的分类
+UFUNCTION(BlueprintCallable, Category="Combat|Damage")
+
+// 控制台命令
+UFUNCTION(Exec)
+
+
+// ===== 其他 =====
+// 该函数不产生执行线（与 BlueprintPure 类似，但可用于 BlueprintCallable）
+UFUNCTION(BlueprintCallable, meta=(CompactNodeTitle="Health"))
+
+// 该函数不导出到蓝图函数库
+UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly="true"))
+
+// 该函数在拥有网络权限的机器上才可执行
+UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+```
+
+## UCLASS（类）
+
+```cpp
+// ===== 蓝图 =====
+// 允许蓝图继承此类，创建蓝图子类
+UCLASS(Blueprintable)
+
+// 允许此类作为蓝图变量类型使用
+UCLASS(BlueprintType)
+
+// 禁止蓝图继承此类
+UCLASS(NotBlueprintable)
+
+// 禁止此类作为蓝图变量类型
+UCLASS(NotBlueprintType)
+
+
+// ===== 抽象与继承 =====
+// 声明为抽象基类，不能在关卡中放置此类的 Actor
+UCLASS(Abstract)
+
+// 类的所有属性/函数为 const（蓝图只读）
+UCLASS(Const)
+
+// 阻止构造函数声明自动生成（需要自己写构造函数）
+UCLASS(CustomConstructor)
+
+
+// ===== 分类与显示 =====
+// 在 Actor 浏览器中指定分组
+UCLASS(ClassGroup=(Combat))
+
+// 该类所有属性默认在“高级”区域显示
+UCLASS(AdvancedClassDisplay)
+
+// 自动展开指定分类
+UCLASS(AutoExpandCategories=(Stats, Combat))
+
+// 取消父类某个分类的自动展开
+UCLASS(AutoCollapseCategories=(Stats))
+
+
+// ===== 配置 =====
+// 此类使用配置文件（.ini）
+UCLASS(Config=Game)
+
+// 使用全局配置文件
+UCLASS(GlobalConfig)
+
+
+// ===== 其他 =====
+// 仅导出类声明，不导出成员函数
+UCLASS(MinimalAPI)
+
+// 标记为弃用
+UCLASS(Deprecated)
+
+// 不导出到蓝图
+UCLASS(NotBlueprintable, BlueprintType)
+```
+
+## USTRUCT（结构体）
+
+```cpp
+// ===== 蓝图 =====
+// 允许蓝图使用此结构体作为变量类型
+USTRUCT(BlueprintType)
+
+// 允许蓝图继承此结构体（创建蓝图结构体）
+USTRUCT(Blueprintable)
+
+
+// ===== 序列化 =====
+// 该结构体始终作为一个整体序列化，不拆分内部成员
+USTRUCT(Atomic)
+
+// 不生成反射代码（极少用）
+USTRUCT(NoExport)
+
+
+// ===== 常用组合 =====
+// 蓝图可用 + 蓝图可继承
+USTRUCT(BlueprintType, Blueprintable)
+
+// 蓝图可用 + 整体序列化
+USTRUCT(BlueprintType, Atomic)
+
+
+// ===== 结构体内部必须包含 =====
+USTRUCT(BlueprintType)
+struct FMyStruct
+{
+    GENERATED_BODY()  // 必须放在第一行
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="My")
+    int32 Health = 100;
+};
+```
+
+## 速查总结表
+
+
+| 类别          | 说明符                        | 作用                       |
+| ------------- | ----------------------------- | -------------------------- |
+| **UPROPERTY** | `BlueprintReadOnly`           | 蓝图只读                   |
+|               | `BlueprintReadWrite`          | 蓝图可读写                 |
+|               | `EditAnywhere`                | 所有地方可编辑             |
+|               | `VisibleAnywhere`             | 所有地方可见但不可编辑     |
+|               | `EditDefaultsOnly`            | 仅类默认值可编辑           |
+|               | `EditInstanceOnly`            | 仅实例可编辑               |
+|               | `Replicated`                  | 参与网络复制               |
+|               | `ReplicatedUsing=Func`        | 复制时调用回调             |
+|               | `Config`                      | 保存到配置文件             |
+|               | `Transient`                   | 不序列化                   |
+|               | `Instanced`                   | 实例化子对象               |
+| **UFUNCTION** | `BlueprintCallable`           | 蓝图可调用                 |
+|               | `BlueprintPure`               | 蓝图纯函数（无执行线）     |
+|               | `BlueprintImplementableEvent` | 蓝图实现                   |
+|               | `BlueprintNativeEvent`        | 蓝图可覆盖，C++ 有默认实现 |
+|               | `Server/Client/NetMulticast`  | 网络 RPC                   |
+|               | `Reliable/Unreliable`         | 可靠/不可靠传输            |
+|               | `CallInEditor`                | 编辑器按钮调用             |
+| **UCLASS**    | `Blueprintable`               | 蓝图可继承                 |
+|               | `BlueprintType`               | 蓝图可作变量类型           |
+|               | `Abstract`                    | 抽象基类                   |
+|               | `NotBlueprintable`            | 禁止蓝图继承               |
+|               | `MinimalAPI`                  | 仅导出类型声明             |
+|               | `Config=Game`                 | 使用配置文件               |
+| **USTRUCT**   | `BlueprintType`               | 蓝图可用作变量类型         |
+|               | `Blueprintable`               | 蓝图可继承                 |
+|               | `Atomic`                      | 整体序列化                 |
+
+> **注意**：`UPROPERTY` 和 `UFUNCTION` 的说明符可以组合使用，多个说明符用逗号分隔。例如 `UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Stats", meta=(ClampMin="0"))`。`meta` 中的键值对用于控制编辑器显示和行为，不参与运行时逻辑。
+>
 
 # 配置输入映射
 
