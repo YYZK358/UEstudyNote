@@ -1150,14 +1150,16 @@ UStaticMeshComponent* StaticMesh;
 UArrowComponent* Arrow;
 ```
 
-## TObjectPtr
+## 指针
+
+### TObjectPtr
 
 ```cpp
 //指针
 TObjectPtr<T> name
 ```
 
-## TArray
+## TArray 数组
 
 ```cpp
 // 创建数组
@@ -1223,6 +1225,61 @@ void SetState(ECharacterState NewState)
     }
 }
 ```
+
+## TSubclassof 类引用
+
+```cpp
+// “Class Reference”（类引用）
+TSubclassOf<T> MyClass;
+```
+
+## 结构体
+
+```cpp
+//结构体的反射声明
+USTRUCT(Blueprintable)
+struct FCommunicateTableRow : public FTableRowBase
+{
+        //代码生成入口
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	FText ContentText;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	USoundBase *Sound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	TSoftObjectPtr<ULevelSequence> Sequence;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	bool HaveSelect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	TArray<FSelectCommunicateTableRow> Select;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="CommunicatePlugins")
+	bool IsEnd;
+};
+```
+
+`GENERATED_BODY()` 是一个宏，它会被 UHT 替换为一大段**自动生成的代码**。它必须出现在结构体内部的**第一行**（或紧跟 `public:` 之后）。
+
+它生成的内容包括：
+
+1. **反射注册代码**：静态函数 `StaticStruct()`，返回该结构体的 `UScriptStruct*`。
+2. **类型信息**：结构体的名称、大小、对齐、父类等信息。
+3. **属性链表**：把结构体里所有 `UPROPERTY` 成员串成一个链表，供反射系统遍历。
+4. **序列化函数**：`Serialize()`、`NetSerialize()` 等，用于存档和网络复制。
+5. **构造函数辅助**：如果结构体有默认构造函数，会在这里被调用。
+6. **`Super` 类型别名**：如果结构体继承自另一个 `USTRUCT`，会生成这个别名。
+
+**没有 `GENERATED_BODY()`，UHT 生成的反射代码就没有地方插入，结构体也无法被反射系统识别。**
 
 # 获取世界中的目标类
 
